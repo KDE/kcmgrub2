@@ -1,0 +1,187 @@
+# Lithuanian translations for PACKAGE package.
+# Copyright (C) 2011 Andrius Štikonas
+# This file is distributed under the same license as the PACKAGE package.
+# Andrius Štikonas <stikonas@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-31 22:20+0100\n"
+"PO-Revision-Date: 2011-01-30 20:27+0100\n"
+"Last-Translator: Andrius Štikonas <stikonas@gmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10==1 && n%100!=11 ? 1 : n"
+"%10>=2 && (n%100<10 || n%100>=20) ? 2 : 3);\n"
+
+#. i18n: file: kcmgrub2.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Form)
+#: i18n/rc.cpp:3 rc.cpp:3
+msgid "Form"
+msgstr "Forma"
+
+#. i18n: file: kcmgrub2.ui:30
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: i18n/rc.cpp:6 rc.cpp:6
+msgid "General"
+msgstr "Bendri"
+
+#. i18n: file: kcmgrub2.ui:44
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: i18n/rc.cpp:9 rc.cpp:9
+msgid "Default item"
+msgstr "Numatytas įrašas"
+
+#. i18n: file: kcmgrub2.ui:65
+#. i18n: ectx: property (text), widget (QCheckBox, autoStart)
+#: i18n/rc.cpp:12 rc.cpp:12
+msgid "Automatically boot default item after"
+msgstr "Automatiškai krauti numatytą įrašą po"
+
+#. i18n: file: kcmgrub2.ui:93
+#. i18n: ectx: property (suffix), widget (QSpinBox, autoStartTimeout)
+#: i18n/rc.cpp:15 rc.cpp:15
+msgid "s"
+msgstr "s"
+
+#. i18n: file: kcmgrub2.ui:107
+#. i18n: ectx: property (text), widget (QCheckBox, showBgImage)
+#: i18n/rc.cpp:18 rc.cpp:18
+msgid "Show background image"
+msgstr "Rodyti fono paveikslėlį"
+
+#. i18n: file: kcmgrub2.ui:120
+#. i18n: ectx: property (filter), widget (KUrlRequester, bgImage)
+#: i18n/rc.cpp:21 rc.cpp:21
+msgid "*.png *.tga *.jpg *.jpeg"
+msgstr "*.png *.tga *.jpg *.jpeg"
+
+#. i18n: file: kcmgrub2.ui:129
+#. i18n: ectx: property (text), widget (QCheckBox, showCountdown)
+#: i18n/rc.cpp:24 rc.cpp:24
+msgid "Show countdown"
+msgstr "Rodyti laiką, likusį iki įkrovos"
+
+#. i18n: file: kcmgrub2.ui:136
+#. i18n: ectx: property (text), widget (QCheckBox, noHidden)
+#: i18n/rc.cpp:27 rc.cpp:27
+msgid "Show menu even if only one system is installed"
+msgstr "Rodyti meniu, net jei įdiegta tik viena sistema"
+
+#. i18n: file: kcmgrub2.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, showSplash)
+#: i18n/rc.cpp:30 rc.cpp:30
+msgid "Show splash screen on linux bootup"
+msgstr "Rodyti grafinį ekraną kraunantis linux sistemai"
+
+#. i18n: file: kcmgrub2.ui:150
+#. i18n: ectx: property (text), widget (QCheckBox, quietBoot)
+#: i18n/rc.cpp:33 rc.cpp:33
+msgid "Quiet boot"
+msgstr "Tyli įkrova"
+
+#. i18n: file: kcmgrub2.ui:158
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: i18n/rc.cpp:36 rc.cpp:36
+msgid "Advanced"
+msgstr "Išsamiau"
+
+#. i18n: file: kcmgrub2.ui:166
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: i18n/rc.cpp:39 rc.cpp:39
+msgid "Distributor (can be a command)"
+msgstr "Distributorius (gali būti komanda)"
+
+#. i18n: file: kcmgrub2.ui:179
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: i18n/rc.cpp:42 rc.cpp:42
+msgid "Default linux command line"
+msgstr "Numatyta linux komandų eilutė"
+
+#. i18n: file: kcmgrub2.ui:192
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: i18n/rc.cpp:45 rc.cpp:45
+msgid "Graphic mode (width x height x depth)"
+msgstr "Grafinis režimas (plotis x aukštis x gylis)"
+
+#. i18n: file: kcmgrub2.ui:207
+#. i18n: ectx: property (text), widget (QCheckBox, disableGfxterm)
+#: i18n/rc.cpp:48 rc.cpp:48
+msgid "Disable graphical terminal"
+msgstr "Uždrausti grafinį terminalą"
+
+#. i18n: file: kcmgrub2.ui:214
+#. i18n: ectx: property (text), widget (QCheckBox, disableLinuxUUID)
+#: i18n/rc.cpp:51 rc.cpp:51
+msgid "Disable UUID passing"
+msgstr "Uždrausti UUID perdavimą"
+
+#. i18n: file: kcmgrub2.ui:221
+#. i18n: ectx: property (text), widget (QCheckBox, disableLinuxRecovery)
+#: i18n/rc.cpp:54 rc.cpp:54
+msgid "Disable recovery mode"
+msgstr "Uždrausti saugų režimą"
+
+#. i18n: file: kcmgrub2.ui:228
+#. i18n: ectx: property (text), widget (QCheckBox, disableMemtest)
+#: i18n/rc.cpp:57 rc.cpp:57
+msgid "Disable memtest"
+msgstr "Uždrausti memtest"
+
+#: i18n/rc.cpp:58 rc.cpp:58
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Andrius Štikonas"
+
+#: i18n/rc.cpp:59 rc.cpp:59
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stikonas@gmail.com"
+
+#: kcmgrub2.py:19
+msgid "Grub2 configuration"
+msgstr "Grub2 konfigūravimas"
+
+#: kcmgrub2.py:21
+msgid "Grub2 configuration tool"
+msgstr "Grub2 konfigūravimo įrankis"
+
+#: kcmgrub2.py:23
+msgid "(c) 2011 Alberto Mattea"
+msgstr "(c) 2011 Alberto Mattea"
+
+#: kcmgrub2.py:29
+msgid "Alberto Mattea"
+msgstr "Alberto Mattea"
+
+#: kcmgrub2.py:29
+msgid "Maintainer"
+msgstr "Prižiūrėtojas"
+
+#: kcmgrub2.py:70
+msgid "Unable to authenticate/execute the action."
+msgstr "Nepavyko autentifikuotis/įvykdyti veiksmo."
+
+#: kcmgrub2.py:83
+msgid ""
+"Error: cannot open Grub configuration files. Make sure Grub is installed "
+"correctly."
+msgstr ""
+"Klaida: nepavyko atverti Grub konfigūracinių failų. Įsitikinkite, kad Grub "
+"tinkamai įdiegtas."
+
+#: kcmgrub2.py:97
+msgid "Bootloader"
+msgstr "Įkrovos tvarkyklė"
+
+#: kcmgrub2.py:97
+msgid "Updating grub configuration..."
+msgstr "Atnaujinama grub konfigūracija..."
+
+#: kcmgrub2.py:182
+msgid "Last used"
+msgstr "Paskiausiai naudota"

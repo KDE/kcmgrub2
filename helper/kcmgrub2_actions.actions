@@ -1,0 +1,6 @@
+[Domain]
+Name=Grub2 Control Module
+[org.kde.kcontrol.kcmgrub2.save]
+Name=Apply changes to Grub2 configuration
+Description=You need to be root to change bootloader configuration
+Policy=auth_admin

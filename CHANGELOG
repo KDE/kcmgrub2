@@ -1,0 +1,24 @@
+v1.0 - 2011/01/26
+* First public release
+
+v1.1 - 2011/02/03
+Translations:
+* Add French translation (thanks to Bruno Patri)
+* Add Dutch translation (thanks to Ronald Stroethoff)
+* Add Lithuanian translation (thanks to Andrius Štikonas)
+Fixes:
+* Fix a bug that prevented the gfx mode and and the distributor from being edited
+Functionality:
+* Add support for NetBSD/OpenBSD directory structure
+* Reload configuration files after applying changes
+* Use full name instead of number if the default item is not Linux
+* Add button to restore default values
+* Disable "Show menu" and "Show countdown" options if timeout is not enabled
+* Disable memtest option if no memtest has been found
+* Disable "Graphical mode" input if "disable graphical mode" is enabled
+* Show the "updating configuration" progress dialog only after the user has entered the password
+Code:
+* Use fputs() instead of fprintf() in the backend
+* Port everything to new-style signals/slots method
+Other:
+* Update license to GPLv3

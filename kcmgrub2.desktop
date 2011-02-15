@@ -1,0 +1,24 @@
+[Desktop Entry]
+Exec=kcmshell4 kcmgrub2
+Icon=system-reboot
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=kpythonpluginfactory
+X-KDE-PluginKeyword=kcmgrub2/kcmgrub2.py
+X-KDE-ParentApp=kcontrol
+
+X-KDE-System-Settings-Parent-Category=startup-and-shutdown
+
+Name=Grub2 configuration
+Name[fr]=Configuration de Grub2
+Name[it]=Configurazione di Grub2
+Name[lt]=Grub2 konfigūravimas
+Name[nl]=Grub2 configuratie
+Comment=Grub2 configuration tool
+Comment[fr]=Outil de configuration de Grub2
+Comment[it]=Strumento di configurazione per Grub2
+Comment[lt]=Grub2 konfigūravimo įrankis
+Comment[nl]=Grub2 instellen
+X-KDE-Keywords=Grub2 Manager
+

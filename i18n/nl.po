@@ -1,0 +1,186 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the kcmgrub2 package.
+#
+# Ronald  Stroethoff <stroet43@zonnet.nl>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-31 22:20+0100\n"
+"PO-Revision-Date: 2011-01-27 22:16+0100\n"
+"Last-Translator: Ronald <stroet43@zonnet.nl>\n"
+"Language-Team: 07.7 <kde-i18n-doc@kde.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. i18n: file: kcmgrub2.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Form)
+#: i18n/rc.cpp:3 rc.cpp:3
+msgid "Form"
+msgstr "Form"
+
+#. i18n: file: kcmgrub2.ui:30
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: i18n/rc.cpp:6 rc.cpp:6
+msgid "General"
+msgstr "Algemeen"
+
+#. i18n: file: kcmgrub2.ui:44
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: i18n/rc.cpp:9 rc.cpp:9
+msgid "Default item"
+msgstr "Standaard"
+
+#. i18n: file: kcmgrub2.ui:65
+#. i18n: ectx: property (text), widget (QCheckBox, autoStart)
+#: i18n/rc.cpp:12 rc.cpp:12
+msgid "Automatically boot default item after"
+msgstr "Automatisch starten na"
+
+#. i18n: file: kcmgrub2.ui:93
+#. i18n: ectx: property (suffix), widget (QSpinBox, autoStartTimeout)
+#: i18n/rc.cpp:15 rc.cpp:15
+msgid "s"
+msgstr "s"
+
+#. i18n: file: kcmgrub2.ui:107
+#. i18n: ectx: property (text), widget (QCheckBox, showBgImage)
+#: i18n/rc.cpp:18 rc.cpp:18
+msgid "Show background image"
+msgstr "Achtergrond tonen"
+
+#. i18n: file: kcmgrub2.ui:120
+#. i18n: ectx: property (filter), widget (KUrlRequester, bgImage)
+#: i18n/rc.cpp:21 rc.cpp:21
+msgid "*.png *.tga *.jpg *.jpeg"
+msgstr "*.png *.tga *.jpg *.jpeg"
+
+#. i18n: file: kcmgrub2.ui:129
+#. i18n: ectx: property (text), widget (QCheckBox, showCountdown)
+#: i18n/rc.cpp:24 rc.cpp:24
+msgid "Show countdown"
+msgstr "Countdown tonen"
+
+#. i18n: file: kcmgrub2.ui:136
+#. i18n: ectx: property (text), widget (QCheckBox, noHidden)
+#: i18n/rc.cpp:27 rc.cpp:27
+msgid "Show menu even if only one system is installed"
+msgstr "Menu tonen, zelfs als er maar een systeem is geïnstalleerd."
+
+#. i18n: file: kcmgrub2.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, showSplash)
+#: i18n/rc.cpp:30 rc.cpp:30
+msgid "Show splash screen on linux bootup"
+msgstr "Splash screen tonen bij het booten van linux"
+
+#. i18n: file: kcmgrub2.ui:150
+#. i18n: ectx: property (text), widget (QCheckBox, quietBoot)
+#: i18n/rc.cpp:33 rc.cpp:33
+msgid "Quiet boot"
+msgstr "Stil booten"
+
+#. i18n: file: kcmgrub2.ui:158
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: i18n/rc.cpp:36 rc.cpp:36
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+#. i18n: file: kcmgrub2.ui:166
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: i18n/rc.cpp:39 rc.cpp:39
+msgid "Distributor (can be a command)"
+msgstr "Distributeur (mag een commando zijn)"
+
+#. i18n: file: kcmgrub2.ui:179
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: i18n/rc.cpp:42 rc.cpp:42
+msgid "Default linux command line"
+msgstr "Standaard linux commando-regel"
+
+#. i18n: file: kcmgrub2.ui:192
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: i18n/rc.cpp:45 rc.cpp:45
+msgid "Graphic mode (width x height x depth)"
+msgstr "Grafische mode (breedte x hoogte x kleuren)"
+
+#. i18n: file: kcmgrub2.ui:207
+#. i18n: ectx: property (text), widget (QCheckBox, disableGfxterm)
+#: i18n/rc.cpp:48 rc.cpp:48
+msgid "Disable graphical terminal"
+msgstr "Grafische terminal UITschakelen"
+
+#. i18n: file: kcmgrub2.ui:214
+#. i18n: ectx: property (text), widget (QCheckBox, disableLinuxUUID)
+#: i18n/rc.cpp:51 rc.cpp:51
+msgid "Disable UUID passing"
+msgstr "UUID doorgeven UITschakelen"
+
+#. i18n: file: kcmgrub2.ui:221
+#. i18n: ectx: property (text), widget (QCheckBox, disableLinuxRecovery)
+#: i18n/rc.cpp:54 rc.cpp:54
+msgid "Disable recovery mode"
+msgstr "Recovery mode UITschakelen"
+
+#. i18n: file: kcmgrub2.ui:228
+#. i18n: ectx: property (text), widget (QCheckBox, disableMemtest)
+#: i18n/rc.cpp:57 rc.cpp:57
+msgid "Disable memtest"
+msgstr "Geheugentest UITschakelen"
+
+#: i18n/rc.cpp:58 rc.cpp:58
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ronald Stroethoff"
+
+#: i18n/rc.cpp:59 rc.cpp:59
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stroet43@zonnet.nl"
+
+#: kcmgrub2.py:19
+msgid "Grub2 configuration"
+msgstr "Grub2 configuratie"
+
+#: kcmgrub2.py:21
+msgid "Grub2 configuration tool"
+msgstr "Grub2 instellen"
+
+#: kcmgrub2.py:23
+msgid "(c) 2011 Alberto Mattea"
+msgstr "(c) 2011 Alberto Mattea"
+
+#: kcmgrub2.py:29
+msgid "Alberto Mattea"
+msgstr "Alberto Mattea"
+
+#: kcmgrub2.py:29
+msgid "Maintainer"
+msgstr "Maintainer"
+
+#: kcmgrub2.py:70
+msgid "Unable to authenticate/execute the action."
+msgstr "Kan de aktie niet uitvoeren."
+
+#: kcmgrub2.py:83
+msgid ""
+"Error: cannot open Grub configuration files. Make sure Grub is installed "
+"correctly."
+msgstr ""
+"Foutmelding: kan de Grub-configuratie bestanden niet openen. Zorg ervoor dat "
+"Grub correct is geïnstalleerd."
+
+#: kcmgrub2.py:97
+msgid "Bootloader"
+msgstr "Bootloader"
+
+#: kcmgrub2.py:97
+msgid "Updating grub configuration..."
+msgstr "Grub configuratie bijwerken..."
+
+#: kcmgrub2.py:182
+msgid "Last used"
+msgstr "Ongedaan maken"
