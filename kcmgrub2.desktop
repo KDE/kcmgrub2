@@ -10,15 +10,17 @@ X-KDE-ParentApp=kcontrol
 
 X-KDE-System-Settings-Parent-Category=startup-and-shutdown
 
-Name=Grub2 configuration
-Name[fr]=Configuration de Grub2
-Name[it]=Configurazione di Grub2
+Name=Bootloader configuration
+Name[fr]=Configuration du chargeur d'amorçage
+Name[it]=Configurazione del bootloader
 Name[lt]=Grub2 konfigūravimas
 Name[nl]=Grub2 configuratie
+Name[ru]=Настройка Grub2
 Comment=Grub2 configuration tool
 Comment[fr]=Outil de configuration de Grub2
 Comment[it]=Strumento di configurazione per Grub2
 Comment[lt]=Grub2 konfigūravimo įrankis
 Comment[nl]=Grub2 instellen
+Comment[ru]=Инструмент для настройки Grub2
 X-KDE-Keywords=Grub2 Manager
 
