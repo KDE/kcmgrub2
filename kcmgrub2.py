@@ -53,10 +53,9 @@ class PyKcm(KCModule):
     self.setEnabled(False)
     outFile=self.generateCfgfile()
     self.updateGrubd()
-    #for item in self.grubd.values(): print(item)
     self.action=self.authAction()
     self.action.watcher().progressStep.connect(self.showProgress)
-    args={"cfgFile": outFile, "memtestOn": self.otherOptions["memtest"], "memtestPath": self.otherOptions["memtestpath"], "grubd": self.grubd}
+    args={"cfgFile": outFile, "memtestOn": self.otherOptions["memtest"], "memtestPath": self.otherOptions["memtestpath"], "grubd": self.grubd, "grubinst": self.selDevices}
     self.action.setArguments(args)
     self.authSuccessful=False
     reply=self.action.execute()
@@ -72,6 +71,7 @@ class PyKcm(KCModule):
       self.otherOptions.update(self.getOtherOptions())
       self.currentItems=self.getCurrentItems()
       self.parseGrubd()
+      self.getInfo()
       self.loadSettings()
       self.setEnabled(True)
     except:
@@ -203,6 +203,37 @@ class PyKcm(KCModule):
     self.ui.usersGroup.setEnabled(self.ui.secEnabled.isChecked())
     self.ui.groupsGroup.setEnabled(self.ui.secEnabled.isChecked())
     self.updateButtons()
+    ### Tools ###
+    self.ui.pkgName.setText(self.info["pkgName"])
+    self.ui.pkgVersion.setText(self.info["pkgVersion"])
+    self.ui.hostOS.setText(self.info["hostOS"])
+    self.ui.devices.clear()
+    for item in self.parts:
+      curItem=QListWidgetItem(item)
+      curItem.setCheckState(Qt.Unchecked)
+      self.ui.devices.addItem(curItem)
+    self.selDevices=list()
+  
+  def getInfo(self):
+    for f in os.environ["PATH"].split(":"):
+      cur=f + "/" + "grub-mkconfig"
+      if os.path.exists(cur): break
+    else: return
+    source=open(cur).read()
+    pkgName=re.compile(r"PACKAGE_NAME=(.*)", re.IGNORECASE)
+    pkgVersion=re.compile(r"PACKAGE_VERSION=(.*)", re.IGNORECASE)
+    hostOS=re.compile(r"HOST_OS=(.*)", re.IGNORECASE)
+    self.info=dict()
+    if pkgName.search(source): self.info["pkgName"]=pkgName.search(source).groups()[0]
+    else: self.info["pkgName"]=""
+    if pkgVersion.search(source): self.info["pkgVersion"]=pkgVersion.search(source).groups()[0]
+    else: self.info["pkgVersion"]=""
+    if hostOS.search(source): self.info["hostOS"]=hostOS.search(source).groups()[0]
+    else: self.info["hostOS"]=""
+    self.parts=list()
+    if os.path.exists("/proc/partitions"):
+      lines=open("/proc/partitions").readlines()
+      for line in lines[2:]: self.parts.append(line.split()[3])
   
   def populateUsersTable(self):
     self.ui.users.setRowCount(0)
@@ -436,6 +467,12 @@ class PyKcm(KCModule):
     if self.ui.groups.rowCount()==0 or len(self.ui.groups.selectedRanges())==0: self.ui.groupMod.setEnabled(False)
     else: self.ui.groupMod.setEnabled(True)
   
+  def updateDevices(self):
+    self.selDevices=list()
+    for x in range(self.ui.devices.count()):
+      if self.ui.devices.item(x).checkState()==Qt.Checked: self.selDevices.append("/dev/"+ str(self.ui.devices.item(x).text()))
+    self.changed()
+  
   def generateCfgfile(self):
     out=list()
     usedsettings=list()
@@ -623,6 +660,7 @@ class PyKcm(KCModule):
     self.groupDiag.locked.stateChanged.connect(self.updateLocked)
     self.ui.users.clicked.connect(self.updateButtons)
     self.ui.groups.clicked.connect(self.updateButtons)
+    self.ui.devices.clicked.connect(self.updateDevices)
 
 class WorkThread(QThread):
   started=pyqtSignal()

@@ -2,15 +2,19 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <KProcess>
+#include <QDebug>
 
 ActionReply Grub2Helper::save(const QVariantMap &args)
 {
   HelperSupport::progressStep(1);
   int ret, i;
   KProcess updProcess; // update-grub
+  KProcess instProcess; // grub-install
   FILE* fp;
   int maplen=args["grubd"].toMap().count();
+  int devlen=args["grubinst"].toList().count();
   QList<QString> keys=args["grubd"].toMap().keys();
+  QList<QVariant> devices=args["grubinst"].toList();
   fp=fopen("/etc/default/grub","w");
   if (!fp) {
     ret=1;
@@ -48,10 +52,16 @@ ActionReply Grub2Helper::save(const QVariantMap &args)
   updProcess.setShellCommand("update-grub");
   ret=updProcess.execute();
   if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { //BSD
+    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // BSD
       ret=2;
       goto finish;
     }
+  }
+  for (i=0;i<devlen;i++) {
+    QStringList cmd;
+    cmd << QString("/usr/sbin/grub-install") << devices[i].toString();
+    instProcess.setProgram(cmd);
+    ret=instProcess.execute();
   }
   finish:
   if (ret == 0) {
@@ -67,7 +77,7 @@ ActionReply Grub2Helper::fixperm(const QVariantMap &args)
 {
   int ret=0;
   if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { //BSD
+    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // BSD
       ret=2;
       goto finish;
     }
