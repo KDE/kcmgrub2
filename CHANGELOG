@@ -22,3 +22,18 @@ Code:
 * Port everything to new-style signals/slots method
 Other:
 * Update license to GPLv3
+
+v1.2 - 2011/03/12
+Translations:
+* Add Russian translation (thanks to Yuri Efremov)
+* Update Italian translation
+Functionality:
+* Add full support for Grub security features (users, groups, crypted passwords)
+* Add support for installing/reinstalling Grub
+* Add Grub version reporting
+* Add support for GRUB_DISABLE_OS_PROBER option
+* Display useful error messages instead of generic ones
+Fixes:
+* Gracefully handle wrong grub.cfg permissions
+Code:
+* Rework the helper to make it cleaner
