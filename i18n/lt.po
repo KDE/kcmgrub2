@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.kde.org\n"
-"POT-Creation-Date: 2011-01-31 22:20+0100\n"
+"POT-Creation-Date: 2011-03-12 19:55+0100\n"
 "PO-Revision-Date: 2011-01-30 20:27+0100\n"
 "Last-Translator: Andrius Štikonas <stikonas@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -18,155 +18,350 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10==1 && n%100!=11 ? 1 : n"
 "%10>=2 && (n%100<10 || n%100>=20) ? 2 : 3);\n"
 
-#. i18n: file: kcmgrub2.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Form)
+#. i18n: file: groupdiag.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, groupDiag)
 #: i18n/rc.cpp:3 rc.cpp:3
+msgid "Group Settings"
+msgstr ""
+
+#. i18n: file: groupdiag.ui:23
+#. i18n: ectx: property (text), widget (QCheckBox, locked)
+#: i18n/rc.cpp:6 rc.cpp:6
+msgid "Lock group"
+msgstr ""
+
+#. i18n: file: groupdiag.ui:30
+#. i18n: ectx: property (availableLabel), widget (KActionSelector, users)
+#: i18n/rc.cpp:9 rc.cpp:9
+msgid "Available users:"
+msgstr ""
+
+#. i18n: file: groupdiag.ui:33
+#. i18n: ectx: property (selectedLabel), widget (KActionSelector, users)
+#: i18n/rc.cpp:12 rc.cpp:12
+msgid "Selected users:"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, Form)
+#: i18n/rc.cpp:15 rc.cpp:15
 msgid "Form"
 msgstr "Forma"
 
-#. i18n: file: kcmgrub2.ui:30
+#. i18n: file: kcmgrub2.ui:39
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
-#: i18n/rc.cpp:6 rc.cpp:6
+#: i18n/rc.cpp:18 rc.cpp:18
 msgid "General"
 msgstr "Bendri"
 
-#. i18n: file: kcmgrub2.ui:44
+#. i18n: file: kcmgrub2.ui:53
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: i18n/rc.cpp:9 rc.cpp:9
+#: i18n/rc.cpp:21 rc.cpp:21
 msgid "Default item"
 msgstr "Numatytas įrašas"
 
-#. i18n: file: kcmgrub2.ui:65
+#. i18n: file: kcmgrub2.ui:74
 #. i18n: ectx: property (text), widget (QCheckBox, autoStart)
-#: i18n/rc.cpp:12 rc.cpp:12
+#: i18n/rc.cpp:24 rc.cpp:24
 msgid "Automatically boot default item after"
 msgstr "Automatiškai krauti numatytą įrašą po"
 
-#. i18n: file: kcmgrub2.ui:93
+#. i18n: file: kcmgrub2.ui:102
 #. i18n: ectx: property (suffix), widget (QSpinBox, autoStartTimeout)
-#: i18n/rc.cpp:15 rc.cpp:15
+#: i18n/rc.cpp:27 rc.cpp:27
 msgid "s"
 msgstr "s"
 
-#. i18n: file: kcmgrub2.ui:107
+#. i18n: file: kcmgrub2.ui:116
 #. i18n: ectx: property (text), widget (QCheckBox, showBgImage)
-#: i18n/rc.cpp:18 rc.cpp:18
+#: i18n/rc.cpp:30 rc.cpp:30
 msgid "Show background image"
 msgstr "Rodyti fono paveikslėlį"
 
-#. i18n: file: kcmgrub2.ui:120
+#. i18n: file: kcmgrub2.ui:129
 #. i18n: ectx: property (filter), widget (KUrlRequester, bgImage)
-#: i18n/rc.cpp:21 rc.cpp:21
+#: i18n/rc.cpp:33 rc.cpp:33
 msgid "*.png *.tga *.jpg *.jpeg"
 msgstr "*.png *.tga *.jpg *.jpeg"
 
-#. i18n: file: kcmgrub2.ui:129
+#. i18n: file: kcmgrub2.ui:138
 #. i18n: ectx: property (text), widget (QCheckBox, showCountdown)
-#: i18n/rc.cpp:24 rc.cpp:24
+#: i18n/rc.cpp:36 rc.cpp:36
 msgid "Show countdown"
 msgstr "Rodyti laiką, likusį iki įkrovos"
 
-#. i18n: file: kcmgrub2.ui:136
+#. i18n: file: kcmgrub2.ui:145
 #. i18n: ectx: property (text), widget (QCheckBox, noHidden)
-#: i18n/rc.cpp:27 rc.cpp:27
+#: i18n/rc.cpp:39 rc.cpp:39
 msgid "Show menu even if only one system is installed"
 msgstr "Rodyti meniu, net jei įdiegta tik viena sistema"
 
-#. i18n: file: kcmgrub2.ui:143
+#. i18n: file: kcmgrub2.ui:152
 #. i18n: ectx: property (text), widget (QCheckBox, showSplash)
-#: i18n/rc.cpp:30 rc.cpp:30
+#: i18n/rc.cpp:42 rc.cpp:42
 msgid "Show splash screen on linux bootup"
 msgstr "Rodyti grafinį ekraną kraunantis linux sistemai"
 
-#. i18n: file: kcmgrub2.ui:150
+#. i18n: file: kcmgrub2.ui:159
 #. i18n: ectx: property (text), widget (QCheckBox, quietBoot)
-#: i18n/rc.cpp:33 rc.cpp:33
+#: i18n/rc.cpp:45 rc.cpp:45
 msgid "Quiet boot"
 msgstr "Tyli įkrova"
 
-#. i18n: file: kcmgrub2.ui:158
+#. i18n: file: kcmgrub2.ui:180
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#: i18n/rc.cpp:36 rc.cpp:36
+#: i18n/rc.cpp:48 rc.cpp:48
 msgid "Advanced"
 msgstr "Išsamiau"
 
-#. i18n: file: kcmgrub2.ui:166
+#. i18n: file: kcmgrub2.ui:188
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: i18n/rc.cpp:39 rc.cpp:39
+#: i18n/rc.cpp:51 rc.cpp:51
 msgid "Distributor (can be a command)"
 msgstr "Distributorius (gali būti komanda)"
 
-#. i18n: file: kcmgrub2.ui:179
+#. i18n: file: kcmgrub2.ui:201
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: i18n/rc.cpp:42 rc.cpp:42
+#: i18n/rc.cpp:54 rc.cpp:54
 msgid "Default linux command line"
 msgstr "Numatyta linux komandų eilutė"
 
-#. i18n: file: kcmgrub2.ui:192
+#. i18n: file: kcmgrub2.ui:214
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: i18n/rc.cpp:45 rc.cpp:45
+#: i18n/rc.cpp:57 rc.cpp:57
 msgid "Graphic mode (width x height x depth)"
 msgstr "Grafinis režimas (plotis x aukštis x gylis)"
 
-#. i18n: file: kcmgrub2.ui:207
+#. i18n: file: kcmgrub2.ui:229
 #. i18n: ectx: property (text), widget (QCheckBox, disableGfxterm)
-#: i18n/rc.cpp:48 rc.cpp:48
+#: i18n/rc.cpp:60 rc.cpp:60
 msgid "Disable graphical terminal"
 msgstr "Uždrausti grafinį terminalą"
 
-#. i18n: file: kcmgrub2.ui:214
+#. i18n: file: kcmgrub2.ui:236
 #. i18n: ectx: property (text), widget (QCheckBox, disableLinuxUUID)
-#: i18n/rc.cpp:51 rc.cpp:51
+#: i18n/rc.cpp:63 rc.cpp:63
 msgid "Disable UUID passing"
 msgstr "Uždrausti UUID perdavimą"
 
-#. i18n: file: kcmgrub2.ui:221
+#. i18n: file: kcmgrub2.ui:243
 #. i18n: ectx: property (text), widget (QCheckBox, disableLinuxRecovery)
-#: i18n/rc.cpp:54 rc.cpp:54
+#: i18n/rc.cpp:66 rc.cpp:66
 msgid "Disable recovery mode"
 msgstr "Uždrausti saugų režimą"
 
-#. i18n: file: kcmgrub2.ui:228
+#. i18n: file: kcmgrub2.ui:250
 #. i18n: ectx: property (text), widget (QCheckBox, disableMemtest)
-#: i18n/rc.cpp:57 rc.cpp:57
+#: i18n/rc.cpp:69 rc.cpp:69
 msgid "Disable memtest"
 msgstr "Uždrausti memtest"
 
-#: i18n/rc.cpp:58 rc.cpp:58
+#. i18n: file: kcmgrub2.ui:270
+#. i18n: ectx: property (text), widget (QCheckBox, disableOsprober)
+#: i18n/rc.cpp:72 rc.cpp:72
+msgid "Don't search for other operating systems"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:278
+#. i18n: ectx: attribute (title), widget (QWidget, tab_3)
+#: i18n/rc.cpp:75 rc.cpp:75
+msgid "Security"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:284
+#. i18n: ectx: property (text), widget (QCheckBox, secEnabled)
+#: i18n/rc.cpp:78 rc.cpp:78
+msgid "Enable security"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:297
+#. i18n: ectx: property (title), widget (QGroupBox, usersGroup)
+#: i18n/rc.cpp:81 rc.cpp:81
+msgid "Users"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:355
+#. i18n: ectx: property (text), widget (QPushButton, userAdd)
+#: i18n/rc.cpp:84 rc.cpp:84
+msgid "Add"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:362
+#. i18n: ectx: property (text), widget (QPushButton, userDel)
+#: i18n/rc.cpp:87 rc.cpp:87
+msgid "Delete"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:369
+#. i18n: ectx: property (text), widget (QPushButton, userMod)
+#. i18n: file: kcmgrub2.ui:436
+#. i18n: ectx: property (text), widget (QPushButton, groupMod)
+#. i18n: file: kcmgrub2.ui:369
+#. i18n: ectx: property (text), widget (QPushButton, userMod)
+#. i18n: file: kcmgrub2.ui:436
+#. i18n: ectx: property (text), widget (QPushButton, groupMod)
+#: i18n/rc.cpp:90 i18n/rc.cpp:96 rc.cpp:90 rc.cpp:96
+msgid "Edit"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:387
+#. i18n: ectx: property (title), widget (QGroupBox, groupsGroup)
+#: i18n/rc.cpp:93 rc.cpp:93
+msgid "Groups"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:462
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#: i18n/rc.cpp:99 rc.cpp:99
+msgid "Tools"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:474
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: i18n/rc.cpp:102 rc.cpp:102
+#, fuzzy
+msgid "Bootloader details"
+msgstr "Įkrovos tvarkyklė"
+
+#. i18n: file: kcmgrub2.ui:480
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: i18n/rc.cpp:105 rc.cpp:105
+msgid "Package name:"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:506
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: i18n/rc.cpp:108 rc.cpp:108
+msgid "Package version:"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:529
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: i18n/rc.cpp:111 rc.cpp:111
+msgid "Host OS:"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:555
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: i18n/rc.cpp:114 rc.cpp:114
+msgid "Installation drives"
+msgstr ""
+
+#. i18n: file: kcmgrub2.ui:561
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: i18n/rc.cpp:117 rc.cpp:117
+msgid "(Re)install grub on the following devices:"
+msgstr ""
+
+#. i18n: file: userdiag.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, userDiag)
+#: i18n/rc.cpp:120 rc.cpp:120
+msgid "User Settings"
+msgstr ""
+
+#. i18n: file: userdiag.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: i18n/rc.cpp:123 rc.cpp:123
+msgid "User Name"
+msgstr ""
+
+#. i18n: file: userdiag.ui:35
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: i18n/rc.cpp:126 rc.cpp:126
+msgid "Password"
+msgstr ""
+
+#. i18n: file: userdiag.ui:49
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: i18n/rc.cpp:129 rc.cpp:129
+msgid "Confirm password"
+msgstr ""
+
+#. i18n: file: userdiag.ui:65
+#. i18n: ectx: property (text), widget (QCheckBox, superUser)
+#: i18n/rc.cpp:132 kcmgrub2.py:205 rc.cpp:132
+msgid "Superuser"
+msgstr ""
+
+#. i18n: file: userdiag.ui:103
+#. i18n: ectx: property (text), widget (QCheckBox, cryptPass)
+#: i18n/rc.cpp:135 rc.cpp:135
+msgid "Crypt password"
+msgstr ""
+
+#: i18n/rc.cpp:136 rc.cpp:136
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Andrius Štikonas"
 
-#: i18n/rc.cpp:59 rc.cpp:59
+#: i18n/rc.cpp:137 rc.cpp:137
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stikonas@gmail.com"
 
-#: kcmgrub2.py:19
-msgid "Grub2 configuration"
+#: kcmgrub2.py:21
+#, fuzzy
+msgid "Bootloader configuration"
 msgstr "Grub2 konfigūravimas"
 
-#: kcmgrub2.py:21
+#: kcmgrub2.py:23
 msgid "Grub2 configuration tool"
 msgstr "Grub2 konfigūravimo įrankis"
 
-#: kcmgrub2.py:23
+#: kcmgrub2.py:25
 msgid "(c) 2011 Alberto Mattea"
 msgstr "(c) 2011 Alberto Mattea"
 
-#: kcmgrub2.py:29
+#: kcmgrub2.py:33
 msgid "Alberto Mattea"
 msgstr "Alberto Mattea"
 
-#: kcmgrub2.py:29
+#: kcmgrub2.py:33
 msgid "Maintainer"
 msgstr "Prižiūrėtojas"
 
-#: kcmgrub2.py:70
-msgid "Unable to authenticate/execute the action."
+#: kcmgrub2.py:45
+msgid "unknown"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "cannot open /etc/default/grub for writing"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "cannot chdir to /etc/grub.d"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "cannot open files in /etc/grub.d for writing"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "cannot change the execution bit for memtest"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "calling update-grub failed"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "cannot set permissions on grub.cfg"
+msgstr ""
+
+#: kcmgrub2.py:45
+msgid "calling grub-install failed"
+msgstr ""
+
+#: kcmgrub2.py:63
+#, fuzzy
+msgid "Unable to authenticate."
 msgstr "Nepavyko autentifikuotis/įvykdyti veiksmo."
 
-#: kcmgrub2.py:83
+#: kcmgrub2.py:65
+msgid "There was an error while executing the action: "
+msgstr ""
+
+#: kcmgrub2.py:81
 msgid ""
 "Error: cannot open Grub configuration files. Make sure Grub is installed "
 "correctly."
@@ -174,14 +369,72 @@ msgstr ""
 "Klaida: nepavyko atverti Grub konfigūracinių failų. Įsitikinkite, kad Grub "
 "tinkamai įdiegtas."
 
-#: kcmgrub2.py:97
+#: kcmgrub2.py:93 kcmgrub2.py:618
 msgid "Bootloader"
 msgstr "Įkrovos tvarkyklė"
 
-#: kcmgrub2.py:97
+#: kcmgrub2.py:93
 msgid "Updating grub configuration..."
 msgstr "Atnaujinama grub konfigūracija..."
 
-#: kcmgrub2.py:182
+#: kcmgrub2.py:99
+msgid "Installing grub on the selected devices..."
+msgstr ""
+
+#: kcmgrub2.py:133
+msgid ""
+"The configuration file has wrong permissions, you will now be asked for yout "
+"password to fix them."
+msgstr ""
+
+#: kcmgrub2.py:137
+msgid "Cannot fix the permissions"
+msgstr ""
+
+#: kcmgrub2.py:205 kcmgrub2.py:206
+msgid "Name"
+msgstr ""
+
+#: kcmgrub2.py:205
+msgid "Password type"
+msgstr ""
+
+#: kcmgrub2.py:206
+msgid "Locked"
+msgstr ""
+
+#: kcmgrub2.py:206
+msgid "Allowed users"
+msgstr ""
+
+#: kcmgrub2.py:250 kcmgrub2.py:261
+msgid "Yes"
+msgstr ""
+
+#: kcmgrub2.py:250 kcmgrub2.py:261
+msgid "No"
+msgstr ""
+
+#: kcmgrub2.py:251
+msgid "Crypted"
+msgstr ""
+
+#: kcmgrub2.py:251
+msgid "Plaintext"
+msgstr ""
+
+#: kcmgrub2.py:262
+msgid "Everyone"
+msgstr ""
+
+#: kcmgrub2.py:264
+msgid "Superusers only"
+msgstr ""
+
+#: kcmgrub2.py:270
 msgid "Last used"
 msgstr "Paskiausiai naudota"
+
+#: kcmgrub2.py:618
+msgid "Crypting password..."
+msgstr ""

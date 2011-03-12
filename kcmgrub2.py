@@ -18,7 +18,7 @@ class PyKcm(KCModule):
     self.encoding = locale.getlocale(locale.LC_CTYPE)
     appName     = "kcmgrub2"
     catalogue   = "kcmgrub2"
-    programName = ki18n("Grub2 configuration")
+    programName = ki18n("Bootloader configuration")
     version     = "1.1"
     description = ki18n("Grub2 configuration tool")
     license     = KAboutData.License_GPL_V3
