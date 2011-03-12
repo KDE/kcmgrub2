@@ -125,6 +125,13 @@ class PyKcm(KCModule):
     return None
   
   def getCurrentItems(self):
+    if not (os.access("/boot/grub/grub.cfg", os.R_OK) or os.access("/grub/grub.cfg", os.R_OK)):
+      KMessageBox.information(self, i18n("The configuration file has wrong permissions, you will now be asked for yout password to fix them."))
+      self.fixAction=KAuth.Action("org.kde.kcontrol.kcmgrub2.fixperm")
+      self.fixAction.setHelperID("org.kde.kcontrol.kcmgrub2")
+      reply=self.fixAction.execute()
+      if reply.failed(): KMessageBox.error(self, i18n("Cannot fix the permissions"))
+      else: self.load()
     try: lines=open("/boot/grub/grub.cfg").readlines()
     except: lines=open("/grub/grub.cfg").readlines() # NetBSD, OpenBSD
     entries=list()

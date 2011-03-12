@@ -12,6 +12,7 @@ class Grub2Helper : public QObject
 
     public slots:
       ActionReply save(const QVariantMap &map);
+      ActionReply fixperm(const QVariantMap &map);
 
 };
 #endif

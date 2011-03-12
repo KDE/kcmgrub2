@@ -63,5 +63,24 @@ ActionReply Grub2Helper::save(const QVariantMap &args)
   }
 }
 
+ActionReply Grub2Helper::fixperm(const QVariantMap &args)
+{
+  int ret=0;
+  if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
+    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { //BSD
+      ret=2;
+      goto finish;
+    }
+  }
+  finish:
+  if (ret == 0) {
+    return ActionReply::SuccessReply;
+  } else {
+    ActionReply reply(ActionReply::HelperError);
+    reply.setErrorCode(ret);
+    return reply;
+  }
+}
+
 KDE4_AUTH_HELPER_MAIN("org.kde.kcontrol.kcmgrub2", Grub2Helper)
 
