@@ -40,7 +40,7 @@ class PyKcm(KCModule):
     self.setButtons(KCModule.Buttons(KCModule.Apply|KCModule.Default))
     self.connectUiElements()
     self.setNeedsAuthorization(True)
-    self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": ""}
+    self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": "", "GRUB_DISABLE_OS_PROBER": "false"}
     self.defOtherOptions={"memtest": "true", "memtestpath": "/etc/grub.d/" + self.findMemtest() if self.findMemtest() != None else "none"}
     self.fileOptions=self.defFileOptions.copy()
     self.otherOptions=self.defOtherOptions.copy()
@@ -178,6 +178,8 @@ class PyKcm(KCModule):
     else: self.ui.disableLinuxUUID.setChecked(False)
     if self.fileOptions["GRUB_DISABLE_LINUX_RECOVERY"]=="\"true\"": self.ui.disableLinuxRecovery.setChecked(True)
     else: self.ui.disableLinuxRecovery.setChecked(False)
+    if self.fileOptions["GRUB_DISABLE_OS_PROBER"]=="true": self.ui.disableOsprober.setChecked(True)
+    else: self.ui.disableOsprober.setChecked(False)
     if self.otherOptions["memtest"]=="false": self.ui.disableMemtest.setChecked(True)
     else: self.ui.disableMemtest.setChecked(False)
     if self.otherOptions["memtestpath"]=="none": self.ui.disableMemtest.setEnabled(False)
@@ -381,6 +383,10 @@ class PyKcm(KCModule):
     
   def updateDisableMemtest(self, state):
     self.otherOptions["memtest"]="false" if state else "true"
+    self.changed()
+  
+  def updateDisableOsprober(self, state):
+    self.fileOptions["GRUB_DISABLE_OS_PROBER"]="true" if state else "false"
     self.changed()
   
   def updateDistributor(self, state):
@@ -588,6 +594,7 @@ class PyKcm(KCModule):
     self.ui.disableLinuxRecovery.stateChanged.connect(self.updateDisableLinuxRecovery)
     self.ui.secEnabled.stateChanged.connect(self.updateSecEnabled)
     self.ui.disableMemtest.stateChanged.connect(self.updateDisableMemtest)
+    self.ui.disableOsprober.stateChanged.connect(self.updateDisableOsprober)
     self.ui.distributor.textEdited.connect(self.updateDistributor)
     self.ui.gfxMode.textEdited.connect(self.updateGfxMode)
     self.ui.autoStartTimeout.valueChanged.connect(self.updateAutoStartTimeout)
