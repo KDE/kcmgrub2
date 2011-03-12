@@ -19,7 +19,7 @@ class PyKcm(KCModule):
     appName     = "kcmgrub2"
     catalogue   = "kcmgrub2"
     programName = ki18n("Bootloader configuration")
-    version     = "1.1"
+    version     = "1.2"
     description = ki18n("Grub2 configuration tool")
     license     = KAboutData.License_GPL_V3
     copyright   = ki18n("(c) 2011 Alberto Mattea")
