@@ -1,69 +1,110 @@
-#include "helper.h"
 #include <stdio.h>
 #include <sys/stat.h>
 #include <KProcess>
 #include <QDebug>
 
-ActionReply Grub2Helper::save(const QVariantMap &args)
+#include "helper.h"
+
+int Grub2Helper::writeGrubcfg(const char data[])
 {
-  HelperSupport::progressStep(1);
-  int ret, i;
-  KProcess updProcess; // update-grub
-  KProcess instProcess; // grub-install
   FILE* fp;
-  int maplen=args["grubd"].toMap().count();
-  int devlen=args["grubinst"].toList().count();
-  QList<QString> keys=args["grubd"].toMap().keys();
-  QList<QVariant> devices=args["grubinst"].toList();
   fp=fopen("/etc/default/grub","w");
-  if (!fp) {
-    ret=1;
-    goto finish;
-  }
-  fputs(args["cfgFile"].toString().toAscii().constData(), fp);
+  if (!fp)
+    return 1;
+  fputs(data, fp);
   fclose(fp);
+  return 0;
+}
+
+int Grub2Helper::writeScripts(QMap<QString, QVariant> map)
+{
+  int maplen=map.count();
+  int i;
+  FILE* fp;
+  QList<QString> keys=map.keys();
   if (chdir("/etc/grub.d/") != 0)
-  {
-    ret=2;
-    goto finish;
-  }
+    return 2;
   for (i=0;i<maplen;i++) {
     fp=fopen(keys[i].toAscii().constData(),"w");
-    if (!fp) {
-      ret=1;
-      goto finish;
-    }
-    fputs(args["grubd"].toMap().values()[i].toString().toAscii().constData(), fp);
+    if (!fp)
+      return 3;
+    fputs(map.values()[i].toString().toAscii().constData(), fp);
     fclose(fp);
   }
-  if (args["memtestPath"].toString() != "none") {
-    if (args["memtestOn"].toString() == "true") {
-      if (chmod(args["memtestPath"].toString().toAscii().constData(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0) {
-        ret=2;
-        goto finish;
-      }
+  return 0;
+}
+
+int Grub2Helper::chMemtest(QString path, QString on)
+{
+  if (path != "none") {
+    if (on == "true") {
+      if (chmod(path.toAscii().constData(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+        return 4;
     } else {
-      if (chmod(args["memtestPath"].toString().toAscii().constData(), S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) != 0) {
-        ret=2;
-        goto finish;
-      }
+      if (chmod(path.toAscii().constData(), S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) != 0)
+        return 4;
     }
   }
+  return 0;
+}
+
+int Grub2Helper::doUpdate()
+{
+  KProcess updProcess;
   updProcess.setShellCommand("update-grub");
-  ret=updProcess.execute();
+  if (updProcess.execute()!=0)
+    return 5;
+  return 0;
+}
+
+int Grub2Helper::chGrubcfg()
+{
   if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // BSD
-      ret=2;
-      goto finish;
-    }
+    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) // BSD
+      return 6;
   }
-  for (i=0;i<devlen;i++) {
+  return 0;
+}
+
+int Grub2Helper::doInstall(QList<QVariant> devices)
+{
+  KProcess instProcess;
+  int i;
+  for (i=0;i<devices.count();i++) {
     QStringList cmd;
     cmd << QString("/usr/sbin/grub-install") << devices[i].toString();
     instProcess.setProgram(cmd);
-    ret=instProcess.execute();
+    if(instProcess.execute()!=0)
+      return 7;
   }
+  return 0;
+}
+
+ActionReply Grub2Helper::save(const QVariantMap &args)
+{
+  int ret;
+  HelperSupport::progressStep(1);
+  ret=writeGrubcfg(args["cfgFile"].toString().toAscii().constData());
+  if (ret!=0)
+    goto finish;
+  ret=writeScripts(args["grubd"].toMap());
+  if (ret!=0)
+    goto finish;
+  ret=chMemtest(args["memtestPath"].toString(), args["memtestOn"].toString());
+  if (ret!=0)
+    goto finish;
+  ret=doUpdate();
+  if (ret!=0)
+    goto finish;
+  ret=chGrubcfg();
+  if (ret!=0)
+    goto finish;
+  
+  HelperSupport::progressStep(2);
+  ret=doInstall(args["grubinst"].toList());
+   
   finish:
+  HelperSupport::progressStep(3);
   if (ret == 0) {
     return ActionReply::SuccessReply;
   } else {
@@ -77,12 +118,9 @@ ActionReply Grub2Helper::fixperm(const QVariantMap &args)
 {
   int ret=0;
   if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // BSD
-      ret=2;
-      goto finish;
-    }
+    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) // BSD
+      ret=6;
   }
-  finish:
   if (ret == 0) {
     return ActionReply::SuccessReply;
   } else {

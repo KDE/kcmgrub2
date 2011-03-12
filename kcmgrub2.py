@@ -42,6 +42,7 @@ class PyKcm(KCModule):
     self.setNeedsAuthorization(True)
     self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": "", "GRUB_DISABLE_OS_PROBER": "false"}
     self.defOtherOptions={"memtest": "true", "memtestpath": "/etc/grub.d/" + self.findMemtest() if self.findMemtest() != None else "none"}
+    self.errTable=(i18n("unknown"), i18n("cannot open /etc/default/grub for writing"), i18n("cannot chdir to /etc/grub.d"), i18n("cannot open files in /etc/grub.d for writing"), i18n("cannot change the execution bit for memtest"), i18n("calling update-grub failed"), i18n("cannot set permissions on grub.cfg"), i18n("calling grub-install failed"))
     self.fileOptions=self.defFileOptions.copy()
     self.otherOptions=self.defOtherOptions.copy()
 
@@ -59,9 +60,11 @@ class PyKcm(KCModule):
     self.action.setArguments(args)
     self.authSuccessful=False
     reply=self.action.execute()
-    if self.authSuccessful: self.prg.close()
-    if reply.failed(): KMessageBox.error(self, i18n("Unable to authenticate/execute the action."))
+    if not self.authSuccessful: KMessageBox.error(self, i18n("Unable to authenticate."))
+    if reply.failed() and self.authSuccessful:
+      KMessageBox.error(self, i18n("There was an error while executing the action: " + self.errTable[reply.errorCode()]))
     else: self.load()
+    self.action.watcher().progressStep.disconnect(self.showProgress)
     self.setEnabled(True)
 
   def load(self):
@@ -85,16 +88,17 @@ class PyKcm(KCModule):
     self.ui.secEnabled.setChecked(False)
   
   def showProgress(self, state):
-    self.authSuccessful=True
-    try:
-      self.prg.setEnabled(True)
-      self.prg.show()
-    except:
+    if state==1:
+      self.authSuccessful=True
       self.prg=KProgressDialog(self, i18n("Bootloader"), i18n("Updating grub configuration..."))
       self.prg.setModal(True)
       self.prg.setAllowCancel(False)
       self.prg.progressBar().setMaximum(0)
       self.prg.setMinimumDuration(0)
+    elif state==2:
+      self.prg.setLabelText(i18n("Installing grub on the selected devices..."))
+    elif state==3:
+      self.prg.close()
     
   def getOptionsFromFile(self):
     cfg={}
