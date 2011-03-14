@@ -1,6 +1,5 @@
 project( kcmgrub2 )
 add_subdirectory (helper)
-add_subdirectory (i18n)
 find_package( KDE4 REQUIRED )
 include(KDE4Defaults)
 include(FindPythonLibrary)
