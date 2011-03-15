@@ -1,11 +1,32 @@
 [Domain]
 Name=Grub2 Control Module
+Name[cs]=Ovládací modul pro Grub2
+Name[it]=Modulo di controllo per Grub2
+Name[pt]=Módulo de Controlo do Grub2
+Name[uk]=Модуль керування Grub2
+Name[x-test]=xxGrub2 Control Modulexx
 [org.kde.kcontrol.kcmgrub2.save]
 Name=Apply changes to Grub2 configuration
+Name[it]=Applica i cambiamenti alla configurazione di Grub2
+Name[pt]=Aplicar as modificações na configuração do Grub2
+Name[uk]=Внести зміни у налаштування Grub2
+Name[x-test]=xxApply changes to Grub2 configurationxx
 Description=You need to be root to change bootloader configuration
+Description[it]=Devi avere i permessi di root per cambiare la configurazione del bootloader
+Description[pt]=Tem de ser o 'root' para mudar a configuração do gestor de arranque
+Description[uk]=Щоб змінювати налаштування завантажувача, потрібні права доступу адміністратора (root)
+Description[x-test]=xxYou need to be root to change bootloader configurationxx
 Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.fixperm]
 Name=Fix permissions of the bootloader configuration file
+Name[it]=Sistema i permessi del file di configurazione del bootloader
+Name[pt]=Corrigir as permissões do ficheiro de configuração do gestor de arranque
+Name[uk]=Виправити права доступу до файла налаштувань завантажувача
+Name[x-test]=xxFix permissions of the bootloader configuration filexx
 Description=You need to be root to change bootloader configuration
+Description[it]=Devi avere i permessi di root per cambiare la configurazione del bootloader
+Description[pt]=Tem de ser o 'root' para mudar a configuração do gestor de arranque
+Description[uk]=Щоб змінювати налаштування завантажувача, потрібні права доступу адміністратора (root)
+Description[x-test]=xxYou need to be root to change bootloader configurationxx
 Policy=auth_admin
