@@ -14,6 +14,7 @@ import pbkdf2
 class PyKcm(KCModule):
   def __init__(self, component_data, parent):
     KCModule.__init__(self, component_data, parent)
+    self.ready = False
     self.language = locale.getlocale(locale.LC_MESSAGES)
     self.encoding = locale.getlocale(locale.LC_CTYPE)
     appName     = "kcmgrub2"
@@ -42,7 +43,11 @@ class PyKcm(KCModule):
     self.setNeedsAuthorization(True)
     self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": "", "GRUB_DISABLE_OS_PROBER": "false"}
     self.defOtherOptions={"memtest": "true", "memtestpath": "/etc/grub.d/" + self.findMemtest() if self.findMemtest() != None else "none"}
-    self.errTable=(i18n("unknown"), i18n("cannot open /etc/default/grub for writing"), i18n("cannot chdir to /etc/grub.d"), i18n("cannot open files in /etc/grub.d for writing"), i18n("cannot change the execution bit for memtest"), i18n("calling update-grub failed"), i18n("cannot set permissions on grub.cfg"), i18n("calling grub-install failed"))
+    self.defCurrentColors={"normal": ["white", "black"], "highlight": ["black", "light-gray"]}
+    self.errTable=(i18n("unknown"), i18n("cannot open /etc/default/grub for writing"), i18n("cannot chdir to /etc/grub.d"), i18n("cannot open files in /etc/grub.d for writing"), i18n("cannot change the execution bit for memtest"), i18n("calling update-grub failed"), i18n("cannot set permissions on grub.cfg"), i18n("calling grub-install failed"), i18n("cannot change the execution bit for the colors script"))
+    self.colorsList=("black", "blue", "brown", "cyan", "dark-gray", "green", "light-cyan", "light-blue", "light-green", "light-gray", "light-magenta", "light-red", "magenta", "red", "white", "yellow")
+    self.tcolorsNames=(i18n("Black"), i18n("Blue"), i18n("Brown"), i18n("Cyan"), i18n("Dark grey"), i18n("Green"), i18n("Light cyan"), i18n("Light blue"), i18n("Light green"), i18n("Light gray"), i18n("Light magenta"), i18n("Light red"), i18n("Magenta"), i18n("Red"), i18n("White"), i18n("Yellow"))
+    self.bcolorsNames=(i18n("Transparent"), i18n("Blue"), i18n("Brown"), i18n("Cyan"), i18n("Dark grey"), i18n("Green"), i18n("Light cyan"), i18n("Light blue"), i18n("Light green"), i18n("Light gray"), i18n("Light magenta"), i18n("Light red"), i18n("Magenta"), i18n("Red"), i18n("White"), i18n("Yellow"))
     self.fileOptions=self.defFileOptions.copy()
     self.otherOptions=self.defOtherOptions.copy()
 
@@ -68,11 +73,12 @@ class PyKcm(KCModule):
     self.setEnabled(True)
 
   def load(self):
+    self.ready=False
     self.setEnabled(False)
     try:
       self.fileOptions.update(self.getOptionsFromFile())
       self.otherOptions.update(self.getOtherOptions())
-      self.currentItems=self.getCurrentItems()
+      self.getGrubCfg()
       self.parseGrubd()
       self.getInfo()
       self.loadSettings()
@@ -80,10 +86,12 @@ class PyKcm(KCModule):
     except:
       KMessageBox.error(self, i18n("Error: cannot open Grub configuration files. Make sure Grub is installed correctly."))    
       raise
+    self.ready=True
   
   def defaults(self):
     self.fileOptions=self.defFileOptions.copy()
     self.otherOptions=self.defOtherOptions.copy()
+    self.currentColors=self.defCurrentColors.copy()
     self.loadSettings()
     self.ui.secEnabled.setChecked(False)
   
@@ -128,7 +136,7 @@ class PyKcm(KCModule):
       if "memtest86+" in candidate: return candidate
     return None
   
-  def getCurrentItems(self):
+  def getGrubCfg(self):
     if not (os.access("/boot/grub/grub.cfg", os.R_OK) or os.access("/grub/grub.cfg", os.R_OK)):
       KMessageBox.information(self, i18n("The configuration file has wrong permissions, you will now be asked for your password to fix them."))
       self.fixAction=KAuth.Action("org.kde.kcontrol.kcmgrub2.fixperm")
@@ -136,8 +144,13 @@ class PyKcm(KCModule):
       reply=self.fixAction.execute()
       if reply.failed(): KMessageBox.error(self, i18n("Cannot fix the permissions"))
       else: self.load()
-    try: lines=open("/boot/grub/grub.cfg").readlines()
-    except: lines=open("/grub/grub.cfg").readlines() # NetBSD, OpenBSD
+    try: self.grubCfg=open("/boot/grub/grub.cfg").read()
+    except: self.grubCfg=open("/grub/grub.cfg").read() # NetBSD, OpenBSD
+    self.currentItems=self.getCurrentItems()
+    self.currentColors=self.getCurrentColors()
+  
+  def getCurrentItems(self):
+    lines=self.grubCfg.splitlines()
     entries=list()
     for line in lines:
       tokens=line.split()
@@ -150,6 +163,22 @@ class PyKcm(KCModule):
         osname+=tokens[i]
         entries.append(osname.strip("\"'"))
     return entries
+  
+  def getCurrentColors(self):
+    mcn_reg=re.compile(r"set menu_color_normal=(.+)/(.+)")
+    mch_reg=re.compile(r"set menu_color_highlight=(.+)/(.+)")
+    cn_reg=re.compile(r"set color_normal=(.+)/(.+)")
+    ch_reg=re.compile(r"set color_highlight=(.+)/(.+)")
+    colors=self.defCurrentColors.copy()
+    mcngroups=mcn_reg.findall(self.grubCfg)
+    mchgroups=mch_reg.findall(self.grubCfg)
+    cngroups=cn_reg.findall(self.grubCfg)
+    chgroups=ch_reg.findall(self.grubCfg)
+    if len(mcngroups)>0: colors["normal"]=list(mcngroups[-1])
+    elif len(cngroups)>0: colors["normal"]=list(cngroups[-1])
+    if len(mchgroups)>0: colors["highlight"]=list(mchgroups[-1])
+    elif len(chgroups)>0: colors["highlight"]=list(chgroups[-1])
+    return colors
   
   def loadSettings(self):
     ### General ###
@@ -179,6 +208,7 @@ class PyKcm(KCModule):
     else: self.ui.showSplash.setChecked(False)
     if "quiet" in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]: self.ui.quietBoot.setChecked(True)
     else: self.ui.quietBoot.setChecked(False)
+    self.generateColorsList()
     ### Advanced ###
     self.ui.distributor.setText(self.fileOptions["GRUB_DISTRIBUTOR"])
     self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
@@ -276,6 +306,16 @@ class PyKcm(KCModule):
       self.defItem.emit(SIGNAL("currentIndexChanged(int)"), int(gd))
     elif gd=="saved": self.defItem.setCurrentIndex(self.defItem.count()-1)
     elif gd.strip("\"'") in self.currentItems: self.defItem.setCurrentIndex(self.defItem.findText(gd.strip("\"'")))
+  
+  def generateColorsList(self):
+    self.ui.ntCol.addItems(self.tcolorsNames)
+    self.ui.htCol.addItems(self.tcolorsNames)
+    self.ui.nbCol.addItems(self.bcolorsNames)
+    self.ui.hbCol.addItems(self.bcolorsNames)
+    self.ui.ntCol.setCurrentIndex(self.colorsList.index(self.currentColors["normal"][0]))
+    self.ui.nbCol.setCurrentIndex(self.colorsList.index(self.currentColors["normal"][1]))
+    self.ui.htCol.setCurrentIndex(self.colorsList.index(self.currentColors["highlight"][0]))
+    self.ui.hbCol.setCurrentIndex(self.colorsList.index(self.currentColors["highlight"][1]))
   
   def parseGrubd(self):
     items=os.listdir("/etc/grub.d/")
@@ -471,6 +511,22 @@ class PyKcm(KCModule):
     if self.ui.groups.rowCount()==0 or len(self.ui.groups.selectedRanges())==0: self.ui.groupMod.setEnabled(False)
     else: self.ui.groupMod.setEnabled(True)
   
+  def updateNtCol(self, state):
+    if self.ready: self.currentColors["normal"][0]=self.colorsList[state]
+    self.changed()
+  
+  def updateNbCol(self, state):
+    if self.ready: self.currentColors["normal"][1]=self.colorsList[state]
+    self.changed()
+  
+  def updateHtCol(self, state):
+    if self.ready: self.currentColors["highlight"][0]=self.colorsList[state]
+    self.changed()
+  
+  def updateHbCol(self, state):
+    if self.ready: self.currentColors["highlight"][1]=self.colorsList[state]
+    self.changed()
+  
   def updateDevices(self):
     self.selDevices=list()
     for x in range(self.ui.devices.count()):
@@ -539,6 +595,7 @@ class PyKcm(KCModule):
             toappend=entryregex2.sub(r"\1{", line)
         outitems[x][1].append(toappend)
     for item in outitems: self.grubd[item[0]]="\n".join(item[1])
+    self.grubd["09_colors"]="#! /bin/sh\nset -e\ncat <<EOF\nset menu_color_normal={0}/{1}\nset menu_color_highlight={2}/{3}\nset color_normal={0}/{1}\nset color_highlight={2}/{3}\nEOF\n".format(self.currentColors["normal"][0], self.currentColors["normal"][1], self.currentColors["highlight"][0], self.currentColors["highlight"][1])
   
   def showAddUser(self):
     self.userDiag.userConfirm.setEnabled(False)
@@ -665,6 +722,10 @@ class PyKcm(KCModule):
     self.ui.users.clicked.connect(self.updateButtons)
     self.ui.groups.clicked.connect(self.updateButtons)
     self.ui.devices.clicked.connect(self.updateDevices)
+    self.ui.ntCol.currentIndexChanged.connect(self.updateNtCol)
+    self.ui.nbCol.currentIndexChanged.connect(self.updateNbCol)
+    self.ui.htCol.currentIndexChanged.connect(self.updateHtCol)
+    self.ui.hbCol.currentIndexChanged.connect(self.updateHbCol)
 
 class WorkThread(QThread):
   started=pyqtSignal()

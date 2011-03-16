@@ -31,6 +31,8 @@ int Grub2Helper::writeScripts(QMap<QString, QVariant> map)
     fputs(map.values()[i].toString().toAscii().constData(), fp);
     fclose(fp);
   }
+  if (chmod("09_colors", S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+      return 8;
   return 0;
 }
 
