@@ -1,6 +1,7 @@
 [Domain]
 Name=Grub2 Control Module
 Name[cs]=Ovládací modul pro Grub2
+Name[de]=Grub2-Kontrollmodul
 Name[it]=Modulo di controllo per Grub2
 Name[pt]=Módulo de Controlo do Grub2
 Name[uk]=Модуль керування Grub2
