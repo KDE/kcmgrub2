@@ -41,7 +41,7 @@ class PyKcm(KCModule):
     self.setButtons(KCModule.Buttons(KCModule.Apply|KCModule.Default))
     self.connectUiElements()
     self.setNeedsAuthorization(True)
-    self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": "", "GRUB_DISABLE_OS_PROBER": "false"}
+    self.defFileOptions={"GRUB_DEFAULT": "0", "GRUB_SAVEDEFAULT": "false", "GRUB_HIDDEN_TIMEOUT": "0", "GRUB_TIMEOUT": "3", "GRUB_HIDDEN_TIMEOUT_QUIET": "true", "GRUB_DISTRIBUTOR": "`lsb_release -i -s 2> /dev/null || echo Debian`", "GRUB_CMDLINE_LINUX_DEFAULT": "\"quiet splash\"", "GRUB_TERMINAL": "gfxterm", "GRUB_GFXMODE": "640x480", "GRUB_DISABLE_LINUX_UUID": "false", "GRUB_DISABLE_LINUX_RECOVERY": "\"false\"", "GRUB_BACKGROUND": "", "GRUB_DISABLE_OS_PROBER": "false", "GRUB_INIT_TUNE": ""}
     self.defOtherOptions={"memtest": "true", "memtestpath": "/etc/grub.d/" + self.findMemtest() if self.findMemtest() != None else "none"}
     self.defCurrentColors={"normal": ["white", "black"], "highlight": ["black", "light-gray"]}
     self.errTable=(i18n("unknown"), i18n("cannot open /etc/default/grub for writing"), i18n("cannot chdir to /etc/grub.d"), i18n("cannot open files in /etc/grub.d for writing"), i18n("cannot change the execution bit for memtest"), i18n("calling update-grub failed"), i18n("cannot set permissions on grub.cfg"), i18n("calling grub-install failed"), i18n("cannot change the execution bit for the colors script"))
@@ -227,6 +227,8 @@ class PyKcm(KCModule):
     else: self.ui.disableMemtest.setEnabled(True)
     self.ui.gfxMode.setEnabled(not self.ui.disableGfxterm.isChecked())
     self.ui.label_3.setEnabled(not self.ui.disableGfxterm.isChecked())
+    self.ui.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\" "))
+    self.ui.tunePresets.addItems((i18n("Choose preset..."), i18n("440 Hz beep"), i18n("Broken chord")))
     self.generateBootList()
     ### Security ###
     self.populateUsersTable()
@@ -475,6 +477,16 @@ class PyKcm(KCModule):
     self.fileOptions["GRUB_DISTRIBUTOR"]=str(self.ui.distributor.text())
     self.changed()
   
+  def updateInitTune(self, state):
+    self.fileOptions["GRUB_INIT_TUNE"]=str("\""+state+"\"")
+    self.changed()
+  
+  def updateTunePresets(self, state):
+    if state==1: self.fileOptions["GRUB_INIT_TUNE"]="\"480 440 1\""
+    elif state==2: self.fileOptions["GRUB_INIT_TUNE"]="\"180 440 1 554 1 659 1\""
+    self.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\""))
+    self.changed()
+  
   def updateGfxMode(self, state):
     self.fileOptions["GRUB_GFXMODE"]=str(self.ui.gfxMode.text())
     self.changed()
@@ -701,6 +713,8 @@ class PyKcm(KCModule):
     self.ui.disableMemtest.stateChanged.connect(self.updateDisableMemtest)
     self.ui.disableOsprober.stateChanged.connect(self.updateDisableOsprober)
     self.ui.distributor.textEdited.connect(self.updateDistributor)
+    self.ui.initTune.textEdited.connect(self.updateInitTune)
+    self.ui.tunePresets.currentIndexChanged.connect(self.updateTunePresets)
     self.ui.gfxMode.textEdited.connect(self.updateGfxMode)
     self.ui.autoStartTimeout.valueChanged.connect(self.updateAutoStartTimeout)
     self.ui.bgImage.textChanged.connect(self.updateBgImage)
