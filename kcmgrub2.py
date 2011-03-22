@@ -181,6 +181,7 @@ class PyKcm(KCModule):
     return colors
   
   def loadSettings(self):
+    self.setWhatsThis()
     ### General ###
     ght=self.fileOptions["GRUB_HIDDEN_TIMEOUT"]
     gt=self.fileOptions["GRUB_TIMEOUT"]
@@ -741,6 +742,16 @@ class PyKcm(KCModule):
     self.ui.nbCol.currentIndexChanged.connect(self.updateNbCol)
     self.ui.htCol.currentIndexChanged.connect(self.updateHtCol)
     self.ui.hbCol.currentIndexChanged.connect(self.updateHbCol)
+  
+  def setWhatsThis(self):
+    self.ui.defItem.setWhatsThis(i18n("Select the item that will be highlighted at startup and booted after the specified timeout"))
+    self.ui.nbCol.setWhatsThis(i18n("Choose the menu background color. If you choose 'transparent' and don't set a background image, you'll get a black background"))
+    self.ui.quietBoot.setWhatsThis(i18n("If this is checked, linux startup messages will not be displayed"))
+    self.ui.distributor.setWhatsThis(i18n("This will be used as a title for linux boot items. If you want it to be the output of a command, enclose it in reverse quotes (`)"))
+    self.ui.initTune.setWhatsThis(i18n("Set a tune that will be played on startup using the system speaker. You can either choose one of the presets or write your own with the following syntax: a single number meaning tempo, then pairs of numbers where the first is the frequency and the second is the duration"))
+    self.ui.usersGroup.setWhatsThis(i18n("Here you can manage existing users and add new ones. Superusers can boot every item, edit menu entries and get a commandline. There should be at least one superuser."))
+    self.ui.groupsGroup.setWhatsThis(i18n("Here you can manage menu groups. An unlocked group can be booted by everyone, while locked ones can be booted only by the specified users and by superusers."))
+    self.ui.devices.setWhatsThis(i18n("The bootloader will be installed on the selected devices, overwriting other bootloaders. Be very careful or you may lose access to other operating systems!"))
 
 class WorkThread(QThread):
   started=pyqtSignal()
