@@ -208,6 +208,7 @@ class PyKcm(KCModule):
     else: self.ui.showSplash.setChecked(False)
     if "quiet" in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]: self.ui.quietBoot.setChecked(True)
     else: self.ui.quietBoot.setChecked(False)
+    self.generateBootList()
     self.generateColorsList()
     ### Advanced ###
     self.ui.distributor.setText(self.fileOptions["GRUB_DISTRIBUTOR"])
@@ -228,8 +229,8 @@ class PyKcm(KCModule):
     self.ui.gfxMode.setEnabled(not self.ui.disableGfxterm.isChecked())
     self.ui.label_3.setEnabled(not self.ui.disableGfxterm.isChecked())
     self.ui.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\" "))
+    self.ui.tunePresets.clear()
     self.ui.tunePresets.addItems((i18n("Choose preset..."), i18n("440 Hz beep"), i18n("Broken chord")))
-    self.generateBootList()
     ### Security ###
     self.populateUsersTable()
     self.populateGroupsTable()
