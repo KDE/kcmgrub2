@@ -1,0 +1,5 @@
+#cmake_minimum_required(VERSION 2.6)
+project(VBETEST)
+add_subdirectory(x86emu)
+add_executable(vbetest vbetest.c vesamode.c common.c x86-common.c vbe.c thunk.c)
+target_link_libraries(vbetest libx86emu)
