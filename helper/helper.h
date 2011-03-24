@@ -13,6 +13,7 @@ class Grub2Helper : public QObject
     public slots:
       ActionReply save(const QVariantMap &map);
       ActionReply fixperm(const QVariantMap &map);
+      ActionReply probevbe(const QVariantMap &map);
     private:
       int writeGrubcfg(const char data[]);
       int writeScripts(QMap<QString, QVariant> map);

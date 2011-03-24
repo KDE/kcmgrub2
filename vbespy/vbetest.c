@@ -32,150 +32,7 @@ struct {
 	int win_low, win_high;
 } vbe;
 
-static char *run_command = NULL;
 
-void *
-save_state(void)
-{
-	struct LRMI_regs r;
-	void *buffer;
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f04;
-	r.ecx = 0xf; 	/* all states */
-	r.edx = 0; 	/* get buffer size */
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't get video state buffer size (vm86 failure)\n");
-		return NULL;
-	}
-
-	if ((r.eax & 0xffff) != 0x4f) {
-		fprintf(stderr, "Get video state buffer size failed\n");
-		return NULL;
-	}
-
-	buffer = LRMI_alloc_real((r.ebx & 0xffff) * 64);
-
-	if (buffer == NULL) {
-		fprintf(stderr, "Can't allocate video state buffer\n");
-		return NULL;
-	}
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f04;
-	r.ecx = 0xf; 	/* all states */
-	r.edx = 1; 	/* save state */
-	r.es = (unsigned int)buffer >> 4;
-	r.ebx = (unsigned int)buffer & 0xf;
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't save video state (vm86 failure)\n");
-		return NULL;
-	}
-
-	if ((r.eax & 0xffff) != 0x4f) {
-		fprintf(stderr, "Save video state failed\n");
-		return NULL;
-	}
-
-	return buffer;
-}
-
-void
-restore_state(void *buffer)
-{
-	struct LRMI_regs r;
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f04;
-	r.ecx = 0xf; 	/* all states */
-	r.edx = 2; 	/* restore state */
-	r.es = (unsigned int)buffer >> 4;
-	r.ebx = (unsigned int)buffer & 0xf;
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't restore video state (vm86 failure)\n");
-	} else if ((r.eax & 0xffff) != 0x4f) {
-		fprintf(stderr, "Restore video state failed\n");
-	}
-
-	LRMI_free_real(buffer);
-}
-
-void
-text_mode(void)
-{
-	struct LRMI_regs r;
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 3;
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't set text mode (vm86 failure)\n");
-	}
-}
-
-int
-update_window(int address)
-{
-	struct LRMI_regs r;
-	int w, g;
-
-	if (address >= vbe.win_low && address < vbe.win_high)
-		return 0;
-
-	g = vbe.mode->win_granularity * 1024;
-	w = address / g;
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f05;
-	r.ebx = 0;
-	r.edx = w;
-
-	LRMI_int(0x10, &r);
-
-	vbe.win_low = w * g;
-	vbe.win_high = vbe.win_low + vbe.mode->win_size * 1024;
-
-	vbe.win = (char *)(vbe.mode->win_a_segment << 4);
-	vbe.win -= vbe.win_low;
-
-	return 1;
-}
-
-void
-set_pixel(int x, int y, int r, int g, int b)
-{
-	int x_res = vbe.mode->x_resolution;
-	int y_res = vbe.mode->y_resolution;
-	int shift_r = vbe.mode->red_field_position;
-	int shift_g = vbe.mode->green_field_position;
-	int shift_b = vbe.mode->blue_field_position;
-	int pixel_size = (vbe.mode->bits_per_pixel + 7) / 8;
-	int bpl = vbe.mode->bytes_per_scanline;
-	int c, addr;
-
-	if (x < 0 || x >= x_res || y < 0 || y >= y_res)
-		return;
-
-	r >>= 8 - vbe.mode->red_mask_size;
-	g >>= 8 - vbe.mode->green_mask_size;
-	b >>= 8 - vbe.mode->blue_mask_size;
-
-	c = (r << shift_r) | (g << shift_g) | (b << shift_b);
-
-	addr = y * bpl + (x * pixel_size);
-
-	update_window(addr);
-
-	memcpy(vbe.win + addr, &c, pixel_size);
-}
 
 void
 get_ddc(int n)
@@ -208,78 +65,6 @@ get_ddc(int n)
   return;
 }
 
-void
-set_mode(int n)
-{
-	struct LRMI_regs r;
-
-		fprintf(stderr,"set mode %d\n", n);
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f02;
-	r.ebx = n;
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't set video mode (vm86 failure)\n");
-	} else if ((r.eax & 0xffff) != 0x4f) {
-		fprintf(stderr, "Set video mode failed\n");
-	}
-
-	memset(&r, 0, sizeof(r));
-
-	r.eax = 0x4f01;
-	r.ecx = n;
-	r.es = (unsigned int)vbe.mode >> 4;
-	r.edi = (unsigned int)vbe.mode & 0xf;
-
-	if (!LRMI_int(0x10, &r)) {
-		fprintf(stderr, "Can't get mode info (vm86 failure)\n");
-		return;
-	}
-
-	if ((r.eax & 0xffff) != 0x4f) {
-		fprintf(stderr, "Get mode info failed\n");
-		return;
-	}
-
-	vbe.win_low = vbe.win_high = -1;
-
-	/*
-	 Draw a colorful checkerboard
-	*/
-	if (vbe.mode->memory_model == VBE_MODEL_RGB) {
-		int x_res = vbe.mode->x_resolution;
-		int y_res = vbe.mode->y_resolution;
-		int x, y;
-
-		for (y = 0; y < y_res; ++y) {
-			for (x = 0; x < x_res; ++x) {
-				int r, g, b;
-				if ((x & 16) ^ (y & 16)) {
-					r = x * 255 / x_res;
-					g = y * 255 / y_res;
-					b = 255 - x * 255 / x_res;
-				} else {
-					r = 255 - x * 255 / x_res;
-					g = y * 255 / y_res;
-					b = 255 - y * 255 / y_res;
-				}
-
-				set_pixel(x, y, r, g, b);
-			}
-		}
-	}
-}
-
-
-void
-usage_and_quit(int error)
-{
-	fputs("Usage: vbetest [-m mode] [-c command]\n",
-	 error ? stderr : stdout);
-	exit(error);
-}
-
 int
 main(int argc, char *argv[])
 {
@@ -289,24 +74,6 @@ main(int argc, char *argv[])
 #if defined(__NetBSD__) || defined(__OpenBSD__)
 	unsigned long iomap[32];
 #endif
-
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-c") == 0) {
-			i++;
-			if (i == argc)
-				usage_and_quit(1);
-			run_command = argv[i];
-		} else if (strcmp(argv[i], "-m") == 0) {
-			char *e;
-			i++;
-			if (i == argc)
-				usage_and_quit(1);
-			mode = strtol(argv[i], &e, 10);
-			if (e == argv[i])
-				usage_and_quit(1);
-		} else
-			usage_and_quit(1);
-	}
 
 	if (!LRMI_init())
 		return 1;
@@ -365,8 +132,8 @@ main(int argc, char *argv[])
 	 (int)(vbe.info->vbe_version >> 8) & 0xff,
 	 (int)vbe.info->vbe_version & 0xff);
 
-        /*fprintf(stderr,"%s\n",
-	 (char *)(vbe.info->oem_string_seg * 16 + vbe.info->oem_string_off));*/
+        fprintf(stderr,"%s\n",
+	 (char *)(vbe.info->oem_string_seg * 16 + vbe.info->oem_string_off));
 
 	get_ddc(0);
 	mode_list = (short int *)(vbe.info->video_mode_list_seg * 16 + vbe.info->video_mode_list_off);
@@ -385,23 +152,25 @@ main(int argc, char *argv[])
 		}
 
 		if (vbe.mode->memory_model == VBE_MODEL_RGB)
-			printf("[%3d] %dx%d (%d:%d:%d)\n",
-			 *mode_list,
-			 vbe.mode->x_resolution,
-			 vbe.mode->y_resolution,
-			 vbe.mode->red_mask_size,
-			 vbe.mode->green_mask_size,
-			 vbe.mode->blue_mask_size);
+			printf("[%3d] %dx%dx%d (%d:%d:%d)\n",
+                         *mode_list,
+                         vbe.mode->x_resolution,
+                         vbe.mode->y_resolution,
+                         vbe.mode->red_mask_size+vbe.mode->green_mask_size+vbe.mode->blue_mask_size,
+                         vbe.mode->red_mask_size,
+                         vbe.mode->green_mask_size,
+                         vbe.mode->blue_mask_size);
 		else if (vbe.mode->memory_model == VBE_MODEL_256)
-			printf("[%3d] %dx%d (256 color palette)\n",
+			printf("[%3d] %dx%dx8 (256 color palette)\n",
 			 *mode_list,
 			 vbe.mode->x_resolution,
 			 vbe.mode->y_resolution);
 		else if (vbe.mode->memory_model == VBE_MODEL_PACKED)
-			printf("[%3d] %dx%d (%d color palette)\n",
+			printf("[%3d] %dx%dx%d (%d color palette)\n",
 			 *mode_list,
 			 vbe.mode->x_resolution,
 			 vbe.mode->y_resolution,
+                         vbe.mode->bits_per_pixel,
 			 1 << vbe.mode->bits_per_pixel);
 
 		mode_list++;

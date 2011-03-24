@@ -7,7 +7,7 @@ from PyKDE4.kdecore import *
 from PyKDE4.kdeui import *
 from PyKDE4.kio import *
 from PyQt4 import uic
-import os, locale, re
+import os, locale, re, Xlib, Xlib.display
 import pbkdf2
 
 
@@ -30,6 +30,7 @@ class PyKcm(KCModule):
     uifile = KStandardDirs.locate("data", "kcmgrub2/kcmgrub2.ui")
     userdiagfile = KStandardDirs.locate("data", "kcmgrub2/userdiag.ui")
     groupdiagfile = KStandardDirs.locate("data", "kcmgrub2/groupdiag.ui")
+    resdiagfile = KStandardDirs.locate("data", "kcmgrub2/resdiag.ui")
     self.aboutData=KAboutData(appName, catalogue, programName, version, description, license, copyright, text, homePage, bugEmail)
     self.aboutData.addAuthor(ki18n("Alberto Mattea"), ki18n("Maintainer"))
     self.setAboutData(self.aboutData)
@@ -38,6 +39,8 @@ class PyKcm(KCModule):
     self.userDiag=uic.loadUi(userdiagfile, self.userDiagWidget)
     self.groupDiagWidget=QDialog()
     self.groupDiag=uic.loadUi(groupdiagfile, self.groupDiagWidget)
+    self.resDiagWidget=QDialog()
+    self.resDiag=uic.loadUi(resdiagfile, self.resDiagWidget)
     self.setButtons(KCModule.Buttons(KCModule.Apply|KCModule.Default))
     self.connectUiElements()
     self.setNeedsAuthorization(True)
@@ -232,6 +235,7 @@ class PyKcm(KCModule):
     self.ui.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\" "))
     self.ui.tunePresets.clear()
     self.ui.tunePresets.addItems((i18n("Choose preset..."), i18n("440 Hz beep"), i18n("Broken chord")))
+    self.resDiag.curRes.setText("{0}x{1}x{2}".format(*self.getScreenResolution()))
     ### Security ###
     self.populateUsersTable()
     self.populateGroupsTable()
@@ -489,6 +493,11 @@ class PyKcm(KCModule):
     self.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\""))
     self.changed()
   
+  def updateGfxBox(self, state):
+    self.fileOptions["GRUB_GFXMODE"]=str(self.resDiag.vbeModes.currentItem().text()).split()[1]
+    self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
+    self.changed()
+  
   def updateGfxMode(self, state):
     self.fileOptions["GRUB_GFXMODE"]=str(self.ui.gfxMode.text())
     self.changed()
@@ -699,6 +708,25 @@ class PyKcm(KCModule):
     if password1==password2 and password1!="" and user!="": self.userDiag.userConfirm.setEnabled(True)
     else: self.userDiag.userConfirm.setEnabled(False)
   
+  def doProbeVbe(self):
+    args={"vbetest": KStandardDirs.locate("data", "kcmgrub2/vbetest")}
+    self.probeAction=KAuth.Action("org.kde.kcontrol.kcmgrub2.probevbe")
+    self.probeAction.setHelperID("org.kde.kcontrol.kcmgrub2")
+    self.probeAction.setArguments(args)
+    reply=self.probeAction.execute()
+    if reply.failed(): KMessageBox.error(self, i18n("Cannot probe the video card"))
+    else:
+      res=str(reply.data()[QString(u'contents')].toString()).split("\n")[:-1]
+      self.resDiag.vbeModes.clear()
+      self.resDiag.vbeModes.addItems(res)
+      self.resDiag.show()
+  
+  def getScreenResolution(self):
+    display = Xlib.display.Display()
+    root = display.screen().root
+    desktop = root.get_geometry()
+    return desktop.width, desktop.height, desktop.depth
+  
   def connectUiElements(self):
     self.ui.defItem.currentIndexChanged.connect(self.updateDefItem)
     self.ui.showSplash.stateChanged.connect(self.updateCmdlineFromCheckbox1)
@@ -742,6 +770,10 @@ class PyKcm(KCModule):
     self.ui.nbCol.currentIndexChanged.connect(self.updateNbCol)
     self.ui.htCol.currentIndexChanged.connect(self.updateHtCol)
     self.ui.hbCol.currentIndexChanged.connect(self.updateHbCol)
+    self.ui.probeVbe.clicked.connect(self.doProbeVbe)
+    self.resDiag.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.updateGfxBox)
+    self.resDiag.buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.resDiag.close)
+    self.resDiag.buttonBox.button(QDialogButtonBox.Cancel).clicked.connect(self.resDiag.close)
   
   def setWhatsThis(self):
     self.ui.defItem.setWhatsThis(i18n("Select the item that will be highlighted at startup and booted after the specified timeout"))

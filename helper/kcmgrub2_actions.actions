@@ -46,3 +46,8 @@ Description[pt_BR]=Você precisa autenticar-se como administrador para alterar a
 Description[uk]=Щоб змінювати налаштування завантажувача, потрібні права доступу адміністратора (root)
 Description[x-test]=xxYou need to be root to change bootloader configurationxx
 Policy=auth_admin
+
+[org.kde.kcontrol.kcmgrub2.probevbe]
+Name=Probe the video card for vbe resolutions
+Description=You need to be root to probe the video card
+Policy=auth_admin

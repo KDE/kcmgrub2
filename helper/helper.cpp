@@ -132,5 +132,25 @@ ActionReply Grub2Helper::fixperm(const QVariantMap &args)
   }
 }
 
+ActionReply Grub2Helper::probevbe(const QVariantMap &args)
+{
+  QProcess probeProcess; // readAllStandardOutput() doesn't seem to work with KProcess
+  probeProcess.start(args["vbetest"].toString());
+  if (probeProcess.waitForStarted()!=true) {
+    ActionReply reply(ActionReply::HelperError);
+    reply.setErrorCode(8);
+    return reply;
+  } else {
+    probeProcess.waitForFinished();
+    probeProcess.waitForReadyRead();
+    const QByteArray output=probeProcess.readAllStandardOutput();
+    ActionReply reply(ActionReply::SuccessReply);
+    QVariantMap retdata;
+    retdata["contents"] = output;
+    reply.setData(retdata);
+    return reply;
+  }
+}
+
 KDE4_AUTH_HELPER_MAIN("org.kde.kcontrol.kcmgrub2", Grub2Helper)
 

@@ -7,8 +7,8 @@ include(FindPythonLibrary)
 include(FindPyQt4)
 include(FindPyKDE4)
 
-install(FILES kcmgrub2.py kcmgrub2.ui userdiag.ui groupdiag.ui pbkdf2.py DESTINATION ${DATA_INSTALL_DIR}/kcmgrub2)
+install(FILES kcmgrub2.py kcmgrub2.ui userdiag.ui groupdiag.ui resdiag.ui pbkdf2.py DESTINATION ${DATA_INSTALL_DIR}/kcmgrub2)
 
 kde4_install_icons(${ICON_INSTALL_DIR})
 install(FILES kcmgrub2.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES ${CMAKE_BINARY_DIR}/vbespy/vbetest DESTINATION ${DATA_INSTALL_DIR}/kcmgrub2 PERMISSIONS OWNER_READ OWNER_EXECUTE)
+install(FILES ${CMAKE_BINARY_DIR}/vbespy/vbetest DESTINATION ${DATA_INSTALL_DIR}/kcmgrub2 PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ WORLD_READ)
