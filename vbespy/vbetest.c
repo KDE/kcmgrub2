@@ -7,6 +7,7 @@ This program is in the public domain.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #if defined(__linux__)
@@ -113,7 +114,7 @@ main(int argc, char *argv[])
 	memset(&r, 0, sizeof(r));
 
 	r.eax = 0x4f00;
-	r.es = (unsigned int)vbe.info >> 4;
+	r.es = (uintptr_t)vbe.info >> 4;
 	r.edi = 0;
 
 	memcpy(vbe.info->vbe_signature, "VBE2", 4);
@@ -133,18 +134,18 @@ main(int argc, char *argv[])
 	 (int)vbe.info->vbe_version & 0xff);
 
         fprintf(stderr,"%s\n",
-	 (char *)(vbe.info->oem_string_seg * 16 + vbe.info->oem_string_off));
+	 (char *)(uintptr_t)(vbe.info->oem_string_seg * 16 + vbe.info->oem_string_off));
 
 	get_ddc(0);
-	mode_list = (short int *)(vbe.info->video_mode_list_seg * 16 + vbe.info->video_mode_list_off);
+	mode_list = (short int *)(uintptr_t)(vbe.info->video_mode_list_seg * 16 + vbe.info->video_mode_list_off);
 
 	while (*mode_list != -1) {
 		memset(&r, 0, sizeof(r));
 
 		r.eax = 0x4f01;
 		r.ecx = *mode_list;
-		r.es = (unsigned int)vbe.mode >> 4;
-		r.edi = (unsigned int)vbe.mode & 0xf;
+		r.es = (uintptr_t)vbe.mode >> 4;
+		r.edi = (uintptr_t)vbe.mode & 0xf;
 
 		if (!LRMI_int(0x10, &r)) {
 			fprintf(stderr, "Can't get mode info (vm86 failure)\n");

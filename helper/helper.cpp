@@ -118,6 +118,7 @@ ActionReply Grub2Helper::save(const QVariantMap &args)
 
 ActionReply Grub2Helper::fixperm(const QVariantMap &args)
 {
+  (void)args; // Fix warning
   int ret=0;
   if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
     if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) // BSD

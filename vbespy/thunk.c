@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <sys/mman.h>
 #include <string.h>
+#include <stdint.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
@@ -165,10 +166,10 @@ int LRMI_init() {
 	X86EMU_pioFuncs pioFuncs = {
 		(&x_inb),
 		(&x_inw),
-		(&x_inl),
+		(void *)(&x_inl),
 		(&x_outb),
 		(&x_outw),
-		(&x_outl)
+		(void *)(&x_outl)
 	};
 	
 	X86EMU_setupPioFuncs(&pioFuncs);
@@ -183,7 +184,7 @@ int LRMI_init() {
 	 * Allocate a 64k stack.
 	 */
 	stack = LRMI_alloc_real(64 * 1024);
-	X86_SS = (unsigned int) (stack) >> 4;
+	X86_SS = (uintptr_t) (stack) >> 4;
 	X86_ESP = 0xFFFE;
 
 	//X86_EIP = 0x0600; X86_CS = 0x0;     /* address of 'hlt' */
@@ -240,7 +241,7 @@ int LRMI_int(int num, struct LRMI_regs *registers) {
 	eflags = X86_EFLAGS;
 	eflags = eflags | X86_IF_MASK;
 	X86_EFLAGS = X86_EFLAGS  & ~(X86_VIF_MASK | X86_TF_MASK | X86_IF_MASK | X86_NT_MASK);
-	X86_SS = (unsigned int) (stack) >> 4;
+	X86_SS = (uintptr_t) (stack) >> 4;
 	X86_ESP = 0xFFFE;
 	registers->cs = (read_b((num << 2) + 3) << 8) + read_b((num << 2) + 2);
 	registers->ip = (read_b((num << 2) + 1) << 8) + read_b((num << 2));
