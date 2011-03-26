@@ -11,6 +11,7 @@ X-KDE-ParentApp=kcontrol
 X-KDE-System-Settings-Parent-Category=startup-and-shutdown
 
 Name=Bootloader configuration
+Name[de]=Systemstarteinstellungen
 Name[it]=Configurazione del bootloader
 Name[lt]=Įkrovos tvarkyklės konfigūracija
 Name[nl]=Configuratie van de bootloader
