@@ -1,7 +1,9 @@
 [Domain]
 Name=Grub2 Control Module
 Name[cs]=Ovládací modul pro Grub2
+Name[da]=Kontrolmodul til Grub2
 Name[de]=Grub2-Kontrollmodul
+Name[es]=Módulo de control de Grub2
 Name[it]=Modulo di controllo per Grub2
 Name[lt]=Grub2 valdymo modulis
 Name[nl]=Grub2 besturingsmodule
@@ -11,7 +13,9 @@ Name[uk]=Модуль керування Grub2
 Name[x-test]=xxGrub2 Control Modulexx
 [org.kde.kcontrol.kcmgrub2.save]
 Name=Apply changes to Grub2 configuration
+Name[da]=Anvend ændringer på Grub2-konfigurationen
 Name[de]=Änderungen an den Grub2-Einstellungen anwenden
+Name[es]=Aplicar cambios a la configuración de Grub2
 Name[it]=Applica i cambiamenti alla configurazione di Grub2
 Name[lt]=Pritaikyti pakeitimus Grub2 konfigūracijoje
 Name[nl]=Wijzigingen toepassen op de Grub2 instellingen
@@ -20,7 +24,9 @@ Name[pt_BR]=Aplicar as modificações da configuração do Grub2
 Name[uk]=Внести зміни у налаштування Grub2
 Name[x-test]=xxApply changes to Grub2 configurationxx
 Description=You need to be root to change bootloader configuration
+Description[da]=Du skal være root for at ændre bootloader-konfigurationen
 Description[de]=Nur der Systemverwalter kann Änderungen an den Systemstarteinstellungen vornehmen
+Description[es]=Debe ser root para cambiar la configuración del cargador de arranque
 Description[it]=Devi avere i permessi di root per cambiare la configurazione del bootloader
 Description[lt]=Privalote turėti administratoriaus teises, kad galėtumėte keisti įkrovos tvarkyklės konfigūraciją
 Description[nl]=U dient als root te zijn aangemeld om de instellingen van de bootloader te kunnen wijzigen
@@ -32,6 +38,8 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.fixperm]
 Name=Fix permissions of the bootloader configuration file
+Name[da]=Tilpas rettigheder på bootloaderens konfigurationsfil
+Name[es]=Corregir los permisos del archivo de configuración del cargador de arranque
 Name[it]=Sistema i permessi del file di configurazione del bootloader
 Name[lt]=Taisyti įkrovos tvarkyklės konfigūracijos failo leidimus
 Name[nl]=Rechten op het configuratiebestand van de bootloader repareren
@@ -40,7 +48,9 @@ Name[pt_BR]=Corrigir as permissões do arquivo de configuração do gerenciador 
 Name[uk]=Виправити права доступу до файла налаштувань завантажувача
 Name[x-test]=xxFix permissions of the bootloader configuration filexx
 Description=You need to be root to change bootloader configuration
+Description[da]=Du skal være root for at ændre bootloader-konfigurationen
 Description[de]=Nur der Systemverwalter kann Änderungen an den Systemstarteinstellungen vornehmen
+Description[es]=Debe ser root para cambiar la configuración del cargador de arranque
 Description[it]=Devi avere i permessi di root per cambiare la configurazione del bootloader
 Description[lt]=Privalote turėti administratoriaus teises, kad galėtumėte keisti įkrovos tvarkyklės konfigūraciją
 Description[nl]=U dient als root te zijn aangemeld om de instellingen van de bootloader te kunnen wijzigen
@@ -52,6 +62,7 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.probevbe]
 Name=Probe the video card for vbe resolutions
+Name[da]=Test grafikkortet for VBE-opløsninger
 Name[it]=Accedi alla scheda video per ottenere le risoluzioni supportate
 Name[nl]=Tast de videokaart af voor vbe-resoluties
 Name[pt]=Testar as resoluções VBE da placa gráfica
@@ -59,6 +70,8 @@ Name[pt_BR]=Testar as resoluções VBE da placa de vídeo
 Name[uk]=Визначення роздільних здатностей VBE відеокартки
 Name[x-test]=xxProbe the video card for vbe resolutionsxx
 Description=You need to be root to probe the video card
+Description[da]=Du skal være root for at teste grafikkortet
+Description[es]=Debe ser root para probar la tarjeta gráfica
 Description[it]=Devi avere i permessi di root per accedere alla scheda video
 Description[nl]=U dient als root te zijn aangemeld om de videokaart af te kunnen tasten
 Description[pt]=Tem de ser o 'root' para testar a placa gráfica
