@@ -7,7 +7,13 @@ from PyKDE4.kdecore import *
 from PyKDE4.kdeui import *
 from PyKDE4.kio import *
 from PyQt4 import uic
-import os, locale, re, Xlib, Xlib.display
+import os, locale, re
+try:
+  import Xlib, Xlib.display
+  x=True
+except:
+  print("No python XLib bindings found")
+  x=False
 import pbkdf2
 
 
@@ -722,10 +728,12 @@ class PyKcm(KCModule):
       self.resDiag.show()
   
   def getScreenResolution(self):
-    display = Xlib.display.Display()
-    root = display.screen().root
-    desktop = root.get_geometry()
-    return desktop.width, desktop.height, desktop.depth
+    if x:
+      display = Xlib.display.Display()
+      root = display.screen().root
+      desktop = root.get_geometry()
+      return desktop.width, desktop.height, desktop.depth
+    else: return "?", "?", "?"
   
   def connectUiElements(self):
     self.ui.defItem.currentIndexChanged.connect(self.updateDefItem)
