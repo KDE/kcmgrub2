@@ -37,3 +37,17 @@ Fixes:
 * Gracefully handle wrong grub.cfg permissions
 Code:
 * Rework the helper to make it cleaner
+
+v1.3 - 2011/04/04
+Translations (thanks to the respective KDE translation teams):
+* New: Czech, German, Low Saxon, Portuguese, Brazilian Portuguese, Ukrainian, Danish, Spanish, Hungarian
+* Updated: Lithuanian, Italian, Dutch, Russian
+Functionality:
+* Add support for GRUB_INIT_TUNE, including presets
+* Add support for probing the video card for VBE resolutions (largely based on vbespy/vbetest)
+* Add support for changing text and background colors
+* Add tips to explain non-obvious settings
+Ui:
+* Rework the General tab
+Code:
+* Minor fixes
