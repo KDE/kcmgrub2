@@ -21,7 +21,7 @@ Required:
    http://techbase.kde.org/Development/Languages/Python
 
 Optional:
- * Pyhon-xlib
+ * Python-xlib
    http://python-xlib.sourceforge.net/
 
 Please note that if compiling from source you also need to install -dev/-devel
