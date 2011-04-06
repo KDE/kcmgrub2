@@ -1,0 +1,41 @@
+ Kcmgrub2 - a control module to configure the GRUB2 bootloader
+===============================================================
+
+ DEPENDENCIES
+==============
+
+Required:
+ * KDE-Libs 4.4 + KDE-Base-runtime 4.4 (or newer)
+   http://www.kde.org
+
+ * Qt 4.6 (or newer)
+   http://qt.nokia.com/
+
+ * Python 2.6 - 2.7
+   http://www.python.org
+
+ * PyQt
+   http://www.riverbankcomputing.co.uk/software/pyqt/
+
+ * PyKDE
+   http://techbase.kde.org/Development/Languages/Python
+
+Optional:
+ * Pyhon-xlib
+   http://python-xlib.sourceforge.net/
+
+Please note that if compiling from source you also need to install -dev/-devel
+versions of KDE-Libs, KDE-Base-Runtime and Qt, depending on your distribution.
+--------------------------------------------------------------------------------
+
+ COMPILATION AND INSTALLATION
+==============================
+
+Open a terminal in the kcmgrub2 directory and type:
+
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`
+make
+make install (as root)
+--------------------------------------------------------------------------------
