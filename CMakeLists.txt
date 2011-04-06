@@ -1,11 +1,12 @@
 project( kcmgrub2 )
+cmake_minimum_required(VERSION 2.6.2)
 add_subdirectory (helper)
 add_subdirectory (vbespy)
 find_package( KDE4 REQUIRED )
 include(KDE4Defaults)
-include(FindPythonLibrary)
-include(FindPyQt4)
-include(FindPyKDE4)
+find_package(PythonLibrary)
+find_package(PyQt4)
+find_package(PyKDE4)
 
 install(FILES kcmgrub2.py kcmgrub2.ui userdiag.ui groupdiag.ui resdiag.ui pbkdf2.py DESTINATION ${DATA_INSTALL_DIR}/kcmgrub2)
 
