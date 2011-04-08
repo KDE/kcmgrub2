@@ -18,12 +18,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyKDE4.kdecore import *
-from PyKDE4.kdeui import *
-from PyKDE4.kio import *
-from PyQt4 import uic
+try:
+  from PyQt4.QtCore import *
+  from PyQt4.QtGui import *
+  from PyQt4 import uic
+except:
+  print("No python Qt bindings found")
+
+try:
+  from PyKDE4.kdecore import *
+  from PyKDE4.kdeui import *
+  from PyKDE4.kio import *
+except:
+  print("No python Qt bindings found")
+
 import os, locale, re
 try:
   import Xlib, Xlib.display
