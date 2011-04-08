@@ -30,7 +30,7 @@ try:
   from PyKDE4.kdeui import *
   from PyKDE4.kio import *
 except:
-  print("No python Qt bindings found")
+  print("No python KDE bindings found")
 
 import os, locale, re
 try:
