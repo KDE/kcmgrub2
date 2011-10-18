@@ -1,5 +1,6 @@
 [Domain]
 Name=Grub2 Control Module
+Name[ca]=Mòdul de control de Grub2
 Name[cs]=Ovládací modul pro Grub2
 Name[da]=Kontrolmodul til Grub2
 Name[de]=Grub2-Kontrollmodul
@@ -19,6 +20,7 @@ Name[uk]=Модуль керування Grub2
 Name[x-test]=xxGrub2 Control Modulexx
 [org.kde.kcontrol.kcmgrub2.save]
 Name=Apply changes to Grub2 configuration
+Name[ca]=Aplica els canvis a la configuració de Grub2
 Name[da]=Anvend ændringer på Grub2-konfigurationen
 Name[de]=Änderungen an den Grub2-Einstellungen anwenden
 Name[es]=Aplicar cambios a la configuración de Grub2
@@ -37,6 +39,7 @@ Name[sv]=Utför ändringar i inställningen av Grub2
 Name[uk]=Внести зміни у налаштування Grub2
 Name[x-test]=xxApply changes to Grub2 configurationxx
 Description=You need to be root to change bootloader configuration
+Description[ca]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
 Description[da]=Du skal være root for at ændre bootloader-konfigurationen
 Description[de]=Nur der Systemverwalter kann Änderungen an den Systemstarteinstellungen vornehmen
 Description[es]=Debe ser root para cambiar la configuración del cargador de arranque
@@ -57,6 +60,7 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.fixperm]
 Name=Fix permissions of the bootloader configuration file
+Name[ca]=Fixa els permisos del fitxer de configuració del gestor d'arrencada
 Name[da]=Tilpas rettigheder på bootloaderens konfigurationsfil
 Name[es]=Corregir los permisos del archivo de configuración del cargador de arranque
 Name[et]=Alglaaduri seadistusfaili õiguste muutmine
@@ -73,6 +77,7 @@ Name[sv]=Korrigera rättigheter för startprogrammets inställningsfil
 Name[uk]=Виправити права доступу до файла налаштувань завантажувача
 Name[x-test]=xxFix permissions of the bootloader configuration filexx
 Description=You need to be root to change bootloader configuration
+Description[ca]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
 Description[da]=Du skal være root for at ændre bootloader-konfigurationen
 Description[de]=Nur der Systemverwalter kann Änderungen an den Systemstarteinstellungen vornehmen
 Description[es]=Debe ser root para cambiar la configuración del cargador de arranque
@@ -93,6 +98,7 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.probevbe]
 Name=Probe the video card for vbe resolutions
+Name[ca]=Prova la targeta de vídeo per les resolucions vbe
 Name[da]=Test grafikkortet for VBE-opløsninger
 Name[et]=Videokaardi kontrollimine vbe lahutusvõimete osas
 Name[fr]=Détection de la carte vidéo pour les résolutions vbe
@@ -107,6 +113,7 @@ Name[sv]=Avläs VBE-upplösningar från videokortet
 Name[uk]=Визначення роздільних здатностей VBE відеокартки
 Name[x-test]=xxProbe the video card for vbe resolutionsxx
 Description=You need to be root to probe the video card
+Description[ca]=Heu de ser superusuari (root) per provar la targeta de vídeo
 Description[da]=Du skal være root for at teste grafikkortet
 Description[es]=Debe ser root para probar la tarjeta gráfica
 Description[et]=Videokaardi kontrollimiseks peab olema administraator

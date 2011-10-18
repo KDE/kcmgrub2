@@ -11,6 +11,7 @@ X-KDE-ParentApp=kcontrol
 X-KDE-System-Settings-Parent-Category=startup-and-shutdown
 
 Name=Bootloader configuration
+Name[ca]=Configuració del gestor d'arrencada
 Name[da]=Konfiguration af bootloader
 Name[de]=Systemstarteinstellungen
 Name[es]=Configuración del cargador de arranque
@@ -30,6 +31,7 @@ Name[sv]=Inställning av startprogram
 Name[uk]=Налаштування завантажувача
 Name[x-test]=xxBootloader configurationxx
 Comment=Grub2 configuration tool
+Comment[ca]=Eina de configuració de Grub2
 Comment[cs]=Konfigurační nástroj pro Grub2
 Comment[da]=Konfigurationsværktøj til Grub2
 Comment[de]=Einrichtungswerkzeug für Grub2
