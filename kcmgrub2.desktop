@@ -52,4 +52,7 @@ Comment[sv]=Inställningsverktyg för Grub2
 Comment[uk]=Програма для налаштовування Grub2
 Comment[x-test]=xxGrub2 configuration toolxx
 X-KDE-Keywords=Grub2 Manager
+X-KDE-Keywords[pt_BR]=Gerenciador Grub2
+X-KDE-Keywords[uk]=керування,Grub2
+X-KDE-Keywords[x-test]=xxGrub2 Managerxx
 
