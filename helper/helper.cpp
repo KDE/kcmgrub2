@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <KProcess>
 #include <QDebug>
+#include <unistd.h>
 
 #include "helper.h"
 
