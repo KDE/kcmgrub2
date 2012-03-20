@@ -411,146 +411,167 @@ class PyKcm(KCModule):
       if item not in self.security["groups"][group][1]: self.groupDiag.users.availableListWidget().addItem(item)
   
   def updateDefItem(self, state):
-    if state==self.defItem.count()-1:
-      self.fileOptions["GRUB_DEFAULT"]="saved"
-      self.fileOptions["GRUB_SAVEDEFAULT"]="true"
-    else:
-      if "Linux" in self.defItem.itemText(state): self.fileOptions["GRUB_DEFAULT"]=str(state) # No full names with Linux (version changes)
-      else: self.fileOptions["GRUB_DEFAULT"]="'"+str(self.defItem.itemText(state))+"'" # Use full names to avoid reordering problems
-      self.fileOptions["GRUB_SAVEDEFAULT"]="false"
-    self.changed()
+    if self.ready:
+      if state==self.defItem.count()-1:
+        self.fileOptions["GRUB_DEFAULT"]="saved"
+        self.fileOptions["GRUB_SAVEDEFAULT"]="true"
+      else:
+        if "Linux" in self.defItem.itemText(state): self.fileOptions["GRUB_DEFAULT"]=str(state) # No full names with Linux (version changes)
+        else: self.fileOptions["GRUB_DEFAULT"]="'"+str(self.defItem.itemText(state))+"'" # Use full names to avoid reordering problems
+        self.fileOptions["GRUB_SAVEDEFAULT"]="false"
+      self.changed()
   
   def updateCmdlineFromCheckbox1(self, state):
-    if self.ui.showSplash.isChecked():
-      if "splash" not in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]:
-        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+str(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ") + " splash").strip()+"\""
-    else:
-      self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ").replace("splash", "")
-      self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip()+"\""
-    self.ui.cmdlineLinuxDefault.setText(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" "))
-    self.changed()
+    if self.ready:
+      if self.ui.showSplash.isChecked():
+        if "splash" not in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]:
+          self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+str(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ") + " splash").strip()+"\""
+      else:
+        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ").replace("splash", "")
+        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip()+"\""
+      self.ui.cmdlineLinuxDefault.setText(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" "))
+      self.changed()
   
   def updateCmdlineFromCheckbox2(self, state):
-    if self.ui.quietBoot.isChecked():
-      if "quiet" not in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]:
-        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+str(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ") + " quiet").strip()+"\""
-    else:
-      self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ").replace("quiet", "")
-      self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip()+"\""
-    self.ui.cmdlineLinuxDefault.setText(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" "))
-    self.changed()
+    if self.ready:
+      if self.ui.quietBoot.isChecked():
+        if "quiet" not in self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]:
+          self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+str(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ") + " quiet").strip()+"\""
+      else:
+        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" ").replace("quiet", "")
+        self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]="\""+self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip()+"\""
+      self.ui.cmdlineLinuxDefault.setText(self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"].strip("\" "))
+      self.changed()
   
   def updateCmdlineLinuxDefault(self, state):
-    self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=str("\""+state+"\"")
-    if "splash" in state: self.ui.showSplash.setChecked(True)
-    else: self.ui.showSplash.setChecked(False)
-    if "quiet" in state: self.ui.quietBoot.setChecked(True)
-    else: self.ui.quietBoot.setChecked(False)
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_CMDLINE_LINUX_DEFAULT"]=str("\""+state+"\"")
+      if "splash" in state: self.ui.showSplash.setChecked(True)
+      else: self.ui.showSplash.setChecked(False)
+      if "quiet" in state: self.ui.quietBoot.setChecked(True)
+      else: self.ui.quietBoot.setChecked(False)
+      self.changed()
   
   def updateAutoStart(self, state):
-    self.ui.autoStartTimeout.setEnabled(state)
-    if state:
-      self.ui.noHidden.setEnabled(True)
-      self.ui.showCountdown.setEnabled(True)
-      if self.ui.noHidden.isChecked():
-        self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+    if self.ready:
+      self.ui.autoStartTimeout.setEnabled(state)
+      if state:
+        self.ui.noHidden.setEnabled(True)
+        self.ui.showCountdown.setEnabled(True)
+        if self.ui.noHidden.isChecked():
+          self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+        else:
+          self.fileOptions["GRUB_TIMEOUT"]="3"
+          self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
       else:
-        self.fileOptions["GRUB_TIMEOUT"]="3"
-        self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
-    else:
-      self.fileOptions["GRUB_TIMEOUT"]="-1"
-      self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=""
-      self.ui.noHidden.setChecked(True)
-      self.ui.noHidden.setEnabled(False)
-      self.ui.showCountdown.setChecked(False)
-      self.ui.showCountdown.setEnabled(False)
-    self.changed()
+        self.fileOptions["GRUB_TIMEOUT"]="-1"
+        self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=""
+        self.ui.noHidden.setChecked(True)
+        self.ui.noHidden.setEnabled(False)
+        self.ui.showCountdown.setChecked(False)
+        self.ui.showCountdown.setEnabled(False)
+      self.changed()
   
   def updateShowBgImage(self, state):
-    self.ui.bgImage.setEnabled(state)
-    if state: self.fileOptions["GRUB_BACKGROUND"]=str(self.ui.bgImage.text())
-    else: self.fileOptions["GRUB_BACKGROUND"]=""
-    self.changed()
+    if self.ready:
+      self.ui.bgImage.setEnabled(state)
+      if state: self.fileOptions["GRUB_BACKGROUND"]=str(self.ui.bgImage.text())
+      else: self.fileOptions["GRUB_BACKGROUND"]=""
+      self.changed()
   
   def updateShowCountdown(self, state):
-    self.fileOptions["GRUB_HIDDEN_TIMEOUT_QUIET"]="false" if state else "true"
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_HIDDEN_TIMEOUT_QUIET"]="false" if state else "true"
+      self.changed()
   
   def updateNoHidden(self, state):
-    if state:
-      self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=""
-      self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
-    else: self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
-    self.changed()
+    if self.ready:
+      if state:
+        self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=""
+        self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+      else: self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+      self.changed()
   
   def updateDisableGfxterm(self, state):
-    if state:
-      self.ui.label_3.setEnabled(False)
-      self.ui.gfxMode.setEnabled(False)
-    else:
-      self.ui.label_3.setEnabled(True)
-      self.ui.gfxMode.setEnabled(True)
-    self.fileOptions["GRUB_TERMINAL"]="console" if state else ""
-    self.changed()
+    if self.ready:
+      if state:
+        self.ui.label_3.setEnabled(False)
+        self.ui.gfxMode.setEnabled(False)
+      else:
+        self.ui.label_3.setEnabled(True)
+        self.ui.gfxMode.setEnabled(True)
+      self.fileOptions["GRUB_TERMINAL"]="console" if state else ""
+      self.changed()
   
   def updateDisableLinuxUUID(self, state):
-    self.fileOptions["GRUB_DISABLE_LINUX_UUID"]="true" if state else "false"
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_DISABLE_LINUX_UUID"]="true" if state else "false"
+      self.changed()
   
   def updateDisableLinuxRecovery(self, state):
-    self.fileOptions["GRUB_DISABLE_LINUX_RECOVERY"]="\"true\"" if state else "false"
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_DISABLE_LINUX_RECOVERY"]="\"true\"" if state else "false"
+      self.changed()
     
   def updateDisableMemtest(self, state):
-    self.otherOptions["memtest"]="false" if state else "true"
-    self.changed()
+    if self.ready:
+      self.otherOptions["memtest"]="false" if state else "true"
+      self.changed()
   
   def updateDisableOsprober(self, state):
-    self.fileOptions["GRUB_DISABLE_OS_PROBER"]="true" if state else "false"
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_DISABLE_OS_PROBER"]="true" if state else "false"
+      self.changed()
   
   def updateDistributor(self, state):
-    self.fileOptions["GRUB_DISTRIBUTOR"]=str(self.ui.distributor.text())
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_DISTRIBUTOR"]=str(self.ui.distributor.text())
+      self.changed()
   
   def updateInitTune(self, state):
-    self.fileOptions["GRUB_INIT_TUNE"]=str("\""+state+"\"")
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_INIT_TUNE"]=str("\""+state+"\"")
+      self.changed()
   
   def updateTunePresets(self, state):
-    if state==1: self.fileOptions["GRUB_INIT_TUNE"]="\"480 440 1\""
-    elif state==2: self.fileOptions["GRUB_INIT_TUNE"]="\"180 440 1 554 1 659 1\""
-    self.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\""))
-    self.changed()
+    if self.ready:
+      if state==1: self.fileOptions["GRUB_INIT_TUNE"]="\"480 440 1\""
+      elif state==2: self.fileOptions["GRUB_INIT_TUNE"]="\"180 440 1 554 1 659 1\""
+      self.initTune.setText(self.fileOptions["GRUB_INIT_TUNE"].strip("\""))
+      self.changed()
   
   def updateGfxBox(self, state):
-    self.fileOptions["GRUB_GFXMODE"]=str(self.resDiag.vbeModes.currentItem().text()).split()[1]
-    self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_GFXMODE"]=str(self.resDiag.vbeModes.currentItem().text()).split()[1]
+      self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
+      self.changed()
   
   def updateGfxMode(self, state):
-    self.fileOptions["GRUB_GFXMODE"]=str(self.ui.gfxMode.text())
-    self.changed()
+    if self.ready:
+      self.fileOptions["GRUB_GFXMODE"]=str(self.ui.gfxMode.text())
+      self.changed()
   
   def updateAutoStartTimeout(self, state):
-    if self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=="":
-      self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
-    else:
-      self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
-    self.changed()
+    if self.ready:
+      if self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=="":
+        self.fileOptions["GRUB_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+      else:
+        self.fileOptions["GRUB_HIDDEN_TIMEOUT"]=str(self.ui.autoStartTimeout.value())
+      self.changed()
   
   def updateBgImage(self, state):
-    if type(state)==KUrl: self.fileOptions["GRUB_BACKGROUND"]=str(state.path())
-    else: self.fileOptions["GRUB_BACKGROUND"]=str(state)
-    self.changed()
+    if self.ready:
+      if type(state)==KUrl: self.fileOptions["GRUB_BACKGROUND"]=str(state.path())
+      else: self.fileOptions["GRUB_BACKGROUND"]=str(state)
+      self.changed()
   
   def updateSecEnabled(self, state):
-    self.ui.usersGroup.setEnabled(state)
-    self.ui.groupsGroup.setEnabled(state)
-    self.ui.userDel.setEnabled(self.ui.users.rowCount()>0)
-    self.ui.userMod.setEnabled(self.ui.users.rowCount()>0)
-    self.changed()
+    if self.ready:
+      self.ui.usersGroup.setEnabled(state)
+      self.ui.groupsGroup.setEnabled(state)
+      self.ui.userDel.setEnabled(self.ui.users.rowCount()>0)
+      self.ui.userMod.setEnabled(self.ui.users.rowCount()>0)
+      self.changed()
   
   def updateLocked(self, state):
     self.groupDiag.users.setEnabled(state)
@@ -566,26 +587,31 @@ class PyKcm(KCModule):
     else: self.ui.groupMod.setEnabled(True)
   
   def updateNtCol(self, state):
-    if self.ready: self.currentColors["normal"][0]=self.colorsList[state]
-    self.changed()
+    if self.ready:
+      self.currentColors["normal"][0]=self.colorsList[state]
+      self.changed()
   
   def updateNbCol(self, state):
-    if self.ready: self.currentColors["normal"][1]=self.colorsList[state]
-    self.changed()
+    if self.ready:
+      self.currentColors["normal"][1]=self.colorsList[state]
+      self.changed()
   
   def updateHtCol(self, state):
-    if self.ready: self.currentColors["highlight"][0]=self.colorsList[state]
-    self.changed()
+    if self.ready:
+      self.currentColors["highlight"][0]=self.colorsList[state]
+      self.changed()
   
   def updateHbCol(self, state):
-    if self.ready: self.currentColors["highlight"][1]=self.colorsList[state]
-    self.changed()
+    if self.ready:
+      self.currentColors["highlight"][1]=self.colorsList[state]
+      self.changed()
   
   def updateDevices(self):
-    self.selDevices=list()
-    for x in range(self.ui.devices.count()):
-      if self.ui.devices.item(x).checkState()==Qt.Checked: self.selDevices.append("/dev/"+ str(self.ui.devices.item(x).text()))
-    self.changed()
+    if self.ready:
+      self.selDevices=list()
+      for x in range(self.ui.devices.count()):
+        if self.ui.devices.item(x).checkState()==Qt.Checked: self.selDevices.append("/dev/"+ str(self.ui.devices.item(x).text()))
+      self.changed()
   
   def generateCfgfile(self):
     out=list()
