@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <KProcess>
+#include <QFile>
 #include <QDebug>
 #include <unistd.h>
 
@@ -54,28 +55,63 @@ int Grub2Helper::chMemtest(QString path, QString on)
 int Grub2Helper::doUpdate()
 {
   KProcess updProcess;
-  updProcess.setShellCommand("update-grub");
+  QFile mkconfig;
+  QString config=findGrubCfg();
+  if (config==QString(""))
+    return 5;
+  QString toexec;
+  mkconfig.setFileName("/usr/sbin/grub2-mkconfig");
+  if (mkconfig.exists()) {
+    toexec.append("/usr/sbin/grub2-mkconfig");
+  } else {
+    mkconfig.setFileName("/usr/sbin/grub-mkconfig");
+    if (mkconfig.exists()) {
+      toexec.append("/usr/sbin/grub-mkconfig");
+    } else {
+      return 5;
+    }
+  }
+  updProcess.setShellCommand(toexec.append(" -o ").append(config));
   if (updProcess.execute()!=0)
     return 5;
   return 0;
 }
 
-int Grub2Helper::chGrubcfg()
+QString Grub2Helper::findGrubCfg()
 {
-  if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) // BSD
-      return 6;
-  }
-  return 0;
+  QFile file;
+  file.setFileName("/grub/grub.cfg");
+  if (file.exists())
+    return QString("/grub/grub.cfg");
+  file.setFileName("/boot/grub2/grub.cfg");
+  if (file.exists())
+    return QString("/boot/grub2/grub.cfg");
+  file.setFileName("/boot/grub/grub.cfg");
+  if (file.exists())
+    return QString("/boot/grub/grub.cfg");
+  return QString("");
 }
 
 int Grub2Helper::doInstall(QList<QVariant> devices)
 {
   KProcess instProcess;
   int i;
+  QFile file;
+  QString toexec;
+  file.setFileName("/usr/sbin/grub2-install");
+  if (file.exists()) {
+    toexec.append("/usr/sbin/grub2-install");
+  } else {
+    file.setFileName("/usr/sbin/grub-install");
+    if (file.exists()) {
+      toexec.append("/usr/sbin/grub-install");
+    } else {
+      return 7;
+    }
+  }
   for (i=0;i<devices.count();i++) {
     QStringList cmd;
-    cmd << QString("/usr/sbin/grub-install") << devices[i].toString();
+    cmd << toexec << devices[i].toString();
     instProcess.setProgram(cmd);
     if(instProcess.execute()!=0)
       return 7;
@@ -99,9 +135,6 @@ ActionReply Grub2Helper::save(const QVariantMap &args)
   ret=doUpdate();
   if (ret!=0)
     goto finish;
-  ret=chGrubcfg();
-  if (ret!=0)
-    goto finish;
   
   HelperSupport::progressStep(2);
   ret=doInstall(args["grubinst"].toList());
@@ -117,21 +150,24 @@ ActionReply Grub2Helper::save(const QVariantMap &args)
   }
 }
 
-ActionReply Grub2Helper::fixperm(const QVariantMap &args)
+ActionReply Grub2Helper::readcfg(const QVariantMap &args)
 {
   (void)args; // Fix warning
-  int ret=0;
-  if (chmod("/boot/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) { // We need read access to grub.cfg
-    if (chmod("/grub/grub.cfg", S_IRUSR | S_IRGRP | S_IROTH) != 0) // BSD
-      ret=6;
+  ActionReply errorreply(ActionReply::HelperError);
+  errorreply.setErrorCode(6);
+  QFile file;
+  QString config=findGrubCfg();
+  file.setFileName(config);
+  if (!file.open(QIODevice::ReadOnly)) {
+    return errorreply;
   }
-  if (ret == 0) {
-    return ActionReply::SuccessReply;
-  } else {
-    ActionReply reply(ActionReply::HelperError);
-    reply.setErrorCode(ret);
-    return reply;
-  }
+  const QByteArray data=file.readAll();
+  file.close();
+  ActionReply reply(ActionReply::SuccessReply);
+  QVariantMap retdata;
+  retdata["contents"] = data;
+  reply.setData(retdata);
+  return reply;
 }
 
 ActionReply Grub2Helper::probevbe(const QVariantMap &args)

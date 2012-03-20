@@ -171,17 +171,14 @@ class PyKcm(KCModule):
     return None
   
   def getGrubCfg(self):
-    if not (os.access("/boot/grub/grub.cfg", os.R_OK) or os.access("/grub/grub.cfg", os.R_OK)):
-      KMessageBox.information(self, i18n("The configuration file has wrong permissions, you will now be asked for your password to fix them."))
-      self.fixAction=KAuth.Action("org.kde.kcontrol.kcmgrub2.fixperm")
-      self.fixAction.setHelperID("org.kde.kcontrol.kcmgrub2")
-      reply=self.fixAction.execute()
-      if reply.failed(): KMessageBox.error(self, i18n("Cannot fix the permissions"))
-      else: self.load()
-    try: self.grubCfg=open("/boot/grub/grub.cfg").read()
-    except: self.grubCfg=open("/grub/grub.cfg").read() # NetBSD, OpenBSD
-    self.currentItems=self.getCurrentItems()
-    self.currentColors=self.getCurrentColors()
+    self.readAction=KAuth.Action("org.kde.kcontrol.kcmgrub2.readcfg")
+    self.readAction.setHelperID("org.kde.kcontrol.kcmgrub2")
+    reply=self.readAction.execute()
+    if reply.failed(): raise OSError
+    else:
+      self.grubCfg=unicode(reply.data()[QString(u'contents')].toString(), "utf-8")
+      self.currentItems=self.getCurrentItems()
+      self.currentColors=self.getCurrentColors()
   
   def getCurrentItems(self):
     lines=self.grubCfg.splitlines()
@@ -291,6 +288,9 @@ class PyKcm(KCModule):
     for f in os.environ["PATH"].split(":"):
       cur=f + "/" + "grub-mkconfig"
       if os.path.exists(cur): break
+      else:
+        cur=f + "/" + "grub2-mkconfig"
+        if os.path.exists(cur): break
     else: return
     source=open(cur).read()
     pkgName=re.compile(r"PACKAGE_NAME=(.*)", re.IGNORECASE)
