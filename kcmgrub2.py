@@ -33,12 +33,6 @@ except:
   print("No python KDE bindings found")
 
 import os, locale, re
-try:
-  import Xlib, Xlib.display
-  xlibAvailable=True
-except:
-  print("No python XLib bindings found")
-  xlibAvailable=False
 import pbkdf2
 
 
@@ -541,10 +535,9 @@ class PyKcm(KCModule):
       self.changed()
   
   def updateGfxBox(self, state):
-    if self.ready:
-      self.fileOptions["GRUB_GFXMODE"]=str(self.resDiag.vbeModes.currentItem().text()).split()[1]
-      self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
-      self.changed()
+    self.fileOptions["GRUB_GFXMODE"]=str(self.resDiag.vbeModes.currentItem().text()).split()[1]
+    self.ui.gfxMode.setText(self.fileOptions["GRUB_GFXMODE"])
+    self.changed()
   
   def updateGfxMode(self, state):
     if self.ready:
@@ -779,12 +772,7 @@ class PyKcm(KCModule):
       self.resDiag.show()
   
   def getScreenResolution(self):
-    if xlibAvailable:
-      display = Xlib.display.Display()
-      root = display.screen().root
-      desktop = root.get_geometry()
-      return desktop.width, desktop.height, desktop.depth
-    else: return "?", "?", "?"
+    return QApplication.desktop().screenGeometry().width(), QApplication.desktop().screenGeometry().height(), QApplication.desktop().depth()
   
   def connectUiElements(self):
     self.ui.defItem.currentIndexChanged.connect(self.updateDefItem)
