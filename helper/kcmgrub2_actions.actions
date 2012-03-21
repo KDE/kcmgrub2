@@ -64,11 +64,7 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.readcfg]
 Name=Read bootloader configuration file
-Name[it]=Leggi il file di configurazione del bootloader
-Name[x-test]=xxRead bootloader configuration filexx
 Description=You need to be root to read bootloader configuration
-Description[it]=Devi avere i permessi di root per leggere la configurazione del bootloader
-Description[x-test]=xxYou need to be root to read bootloader configurationxx
 Policy=yes
 
 [org.kde.kcontrol.kcmgrub2.probevbe]
