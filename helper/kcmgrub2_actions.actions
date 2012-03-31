@@ -65,6 +65,7 @@ Policy=auth_admin
 [org.kde.kcontrol.kcmgrub2.readcfg]
 Name=Read bootloader configuration file
 Name[it]=Leggi il file di configurazione del bootloader
+Name[nl]=Configuratiebestand van de bootloader lezen
 Name[pt]=Ler o ficheiro de configuração do gestor de arranque
 Name[pt_BR]=Ler o arquivo de configuração do gerenciador de inicialização
 Name[sv]=Läs startprogrammets inställningsfil
@@ -72,6 +73,7 @@ Name[uk]=Читання файла налаштувань завантажува
 Name[x-test]=xxRead bootloader configuration filexx
 Description=You need to be root to read bootloader configuration
 Description[it]=Devi avere i permessi di root per leggere la configurazione del bootloader
+Description[nl]=U dient als root te zijn aangemeld om de instellingen van de bootloader te kunnen lezen
 Description[pt]=Tem de ser o 'root' para ler a configuração do gestor de arranque
 Description[pt_BR]=Você precisa autenticar-se como administrador para ler a configuração do gerenciador de inicialização
 Description[sv]=Du måste vara systemadministratör för att läsa startprogrammets inställningsfil
