@@ -85,6 +85,7 @@ Name[x-test]=xxRead bootloader configuration filexx
 Description=You need to be root to read bootloader configuration
 Description[ca]=Heu de ser el superusuari (root) per llegir la configuració del gestor d'arrencada
 Description[da]=Du skal være root for at læse bootloader-konfigurationen
+Description[de]=Nur der Systemverwalter kann die Systemstarteinstellungen lesen.
 Description[es]=Debe ser root para leer la configuración del cargador de arranque
 Description[et]=Alglaaduri seadistusfaili lugemiseks peab olema administraator
 Description[fi]=Sinulla tulee olla pääkäyttäjän oikeudet lukeaksesi käynnistyslataajan asetukset
