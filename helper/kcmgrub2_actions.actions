@@ -92,6 +92,7 @@ Description[fi]=Sinulla tulee olla pääkäyttäjän oikeudet lukeaksesi käynni
 Description[fr]=Vous devez être superutilisateur pour lire la configuration du chargeur d'amorçage
 Description[hu]=A rendszerbetöltő beállításainak olvasásához rendszergazdai jogosultságok szükségesek
 Description[it]=Devi avere i permessi di root per leggere la configurazione del bootloader
+Description[lt]=Privalote turėti administratoriaus teises (root), kad galėtumėte keisti įkrovos tvarkyklės konfigūraciją
 Description[nl]=U dient als root te zijn aangemeld om de instellingen van de bootloader te kunnen lezen
 Description[pl]=Musisz być administratorem, aby odczytać plik konfiguracyjny programu rozruchowego
 Description[pt]=Tem de ser o 'root' para ler a configuração do gestor de arranque
