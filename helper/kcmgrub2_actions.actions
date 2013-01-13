@@ -72,6 +72,7 @@ Policy=auth_admin
 Name=Read bootloader configuration file
 Name[ca]=Llegeix el fitxer de configuració del gestor d'arrencada
 Name[da]=Læs bootloaderens konfigurationsfil
+Name[de]=Einstellungsdatei für Bootloader laden
 Name[es]=Leer el archivo de configuración del cargador de arranque
 Name[et]=Alglaaduri seadistusfaili lugemine
 Name[fi]=Lue käynnistyslataajan asetustiedosto
