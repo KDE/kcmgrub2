@@ -11,6 +11,7 @@ X-KDE-ParentApp=kcontrol
 X-KDE-System-Settings-Parent-Category=startup-and-shutdown
 
 Name=Bootloader configuration
+Name[bs]=Konfiguracija pokretača sistema
 Name[ca]=Configuració del gestor d'arrencada
 Name[ca@valencia]=Configuració del gestor d'arrencada
 Name[da]=Konfiguration af bootloader
@@ -65,6 +66,7 @@ Comment[tr]=Grub2 yapılandırma aracı
 Comment[uk]=Програма для налаштовування Grub2
 Comment[x-test]=xxGrub2 configuration toolxx
 X-KDE-Keywords=Grub2 Manager
+X-KDE-Keywords[bs]=Grub2 menadžer
 X-KDE-Keywords[ca]=Gestor Grub2
 X-KDE-Keywords[ca@valencia]=Gestor Grub2
 X-KDE-Keywords[da]=Håndtering af Grub2
