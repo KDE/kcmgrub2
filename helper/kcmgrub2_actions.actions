@@ -26,6 +26,7 @@ Name[sk]=Ovládací modul Grub2
 Name[sv]=Inställningsmodul för Grub2
 Name[tr]=Grub2 Denetim Modülü
 Name[uk]=Модуль керування Grub2
+Name[x-test]=xxGrub2 Control Modulexx
 [org.kde.kcontrol.kcmgrub2.save]
 Name=Apply changes to Grub2 configuration
 Name[bs]=Navedite promjene Grub2 konfiguracije
@@ -54,6 +55,7 @@ Name[sk]=Použiť zmeny na konfiguráciu Grub2
 Name[sv]=Utför ändringar i inställningen av Grub2
 Name[tr]=Grub2 yapılandırmasına değişiklikleri uygular
 Name[uk]=Внести зміни у налаштування Grub2
+Name[x-test]=xxApply changes to Grub2 configurationxx
 Description=You need to be root to change bootloader configuration
 Description[ca]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
 Description[ca@valencia]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
@@ -78,6 +80,7 @@ Description[sk]=Musíte byť root, aby ste mohli meniť nastavenie bootloadera
 Description[sv]=Du måste vara systemadministratör för att ändra inställning av startprogram
 Description[tr]=Önyükleyici yapılandırmasını değiştirmek için yönetici olmanız gerekli
 Description[uk]=Щоб змінювати налаштування завантажувача, потрібні права доступу адміністратора (root)
+Description[x-test]=xxYou need to be root to change bootloader configurationxx
 Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.readcfg]
@@ -103,6 +106,7 @@ Name[sk]=Načítať konfiguračný súbor bootloadera
 Name[sv]=Läs startprogrammets inställningsfil
 Name[tr]=Önyükleme yapılandırma dosyasını oku
 Name[uk]=Читання файла налаштувань завантажувача
+Name[x-test]=xxRead bootloader configuration filexx
 Description=You need to be root to read bootloader configuration
 Description[ca]=Heu de ser el superusuari (root) per llegir la configuració del gestor d'arrencada
 Description[ca@valencia]=Heu de ser el superusuari (root) per llegir la configuració del gestor d'arrencada
@@ -126,6 +130,7 @@ Description[sk]=Musíte byť root, aby ste mohli čítať nastavenie bootloadera
 Description[sv]=Du måste vara systemadministratör för att läsa startprogrammets inställningsfil
 Description[tr]=Önyükleyici yapılandırmasını okumak için yönetici olmanız gerekli
 Description[uk]=Щоб прочитати налаштування завантажувача, потрібні права доступу адміністратора (root)
+Description[x-test]=xxYou need to be root to read bootloader configurationxx
 Policy=yes
 
 [org.kde.kcontrol.kcmgrub2.probevbe]
@@ -152,6 +157,7 @@ Name[sk]=Skúsiť grafickú kartu kvôli vbe rozlíšeniam
 Name[sv]=Avläs VBE-upplösningar från videokortet
 Name[tr]=Vbe çözünürlükleri için video kartını sorgula
 Name[uk]=Визначення роздільних здатностей VBE відеокартки
+Name[x-test]=xxProbe the video card for vbe resolutionsxx
 Description=You need to be root to probe the video card
 Description[ca]=Heu de ser superusuari (root) per provar la targeta de vídeo
 Description[ca@valencia]=Heu de ser superusuari (root) per provar la targeta de vídeo
@@ -176,4 +182,5 @@ Description[sk]=Musíte byť root, aby ste mohli skúšať grafickú kartu
 Description[sv]=Du måste vara systemadministratör för att läsa av videokortet
 Description[tr]=Ekran kartınızı sorgulamak için yönetici olmanız gerekir
 Description[uk]=Для визначення можливостей відеокартки потрібні права доступу адміністратора (root)
+Description[x-test]=xxYou need to be root to probe the video cardxx
 Policy=yes
