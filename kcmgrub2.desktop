@@ -39,6 +39,7 @@ Name[tr]=Önyükleme yapılandırması
 Name[uk]=Налаштування завантажувача
 Name[x-test]=xxBootloader configurationxx
 Comment=Grub2 configuration tool
+Comment[bs]=Grub2 konfiguracijski alat
 Comment[ca]=Eina de configuració de Grub2
 Comment[ca@valencia]=Eina de configuració de Grub2
 Comment[cs]=Konfigurační nástroj pro Grub2

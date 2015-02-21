@@ -57,6 +57,7 @@ Name[tr]=Grub2 yapılandırmasına değişiklikleri uygular
 Name[uk]=Внести зміни у налаштування Grub2
 Name[x-test]=xxApply changes to Grub2 configurationxx
 Description=You need to be root to change bootloader configuration
+Description[bs]=Trebate biti root da promijenite konfiguraciju boot loadera
 Description[ca]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
 Description[ca@valencia]=Heu de ser el superusuari (root) per canviar la configuració del gestor d'arrencada
 Description[da]=Du skal være root for at ændre bootloader-konfigurationen
@@ -85,6 +86,7 @@ Policy=auth_admin
 
 [org.kde.kcontrol.kcmgrub2.readcfg]
 Name=Read bootloader configuration file
+Name[bs]=Čitaj konfiguracijsku datoteku boot loadera
 Name[ca]=Llegeix el fitxer de configuració del gestor d'arrencada
 Name[ca@valencia]=Llig el fitxer de configuració del gestor d'arrencada
 Name[da]=Læs bootloaderens konfigurationsfil
@@ -108,6 +110,7 @@ Name[tr]=Önyükleme yapılandırma dosyasını oku
 Name[uk]=Читання файла налаштувань завантажувача
 Name[x-test]=xxRead bootloader configuration filexx
 Description=You need to be root to read bootloader configuration
+Description[bs]=Trebate biti root da čitate konfiguraciju boot loadera
 Description[ca]=Heu de ser el superusuari (root) per llegir la configuració del gestor d'arrencada
 Description[ca@valencia]=Heu de ser el superusuari (root) per llegir la configuració del gestor d'arrencada
 Description[da]=Du skal være root for at læse bootloader-konfigurationen
@@ -135,6 +138,7 @@ Policy=yes
 
 [org.kde.kcontrol.kcmgrub2.probevbe]
 Name=Probe the video card for vbe resolutions
+Name[bs]=Probajte video karticu za vbe rezolucije
 Name[ca]=Prova la targeta de vídeo per les resolucions vbe
 Name[ca@valencia]=Prova la targeta de vídeo per les resolucions vbe
 Name[da]=Test grafikkortet for VBE-opløsninger
@@ -159,6 +163,7 @@ Name[tr]=Vbe çözünürlükleri için video kartını sorgula
 Name[uk]=Визначення роздільних здатностей VBE відеокартки
 Name[x-test]=xxProbe the video card for vbe resolutionsxx
 Description=You need to be root to probe the video card
+Description[bs]=Trebate biti root da probate video karticu
 Description[ca]=Heu de ser superusuari (root) per provar la targeta de vídeo
 Description[ca@valencia]=Heu de ser superusuari (root) per provar la targeta de vídeo
 Description[da]=Du skal være root for at teste grafikkortet
