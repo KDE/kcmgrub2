@@ -1,5 +1,6 @@
 [Domain]
 Name=Grub2 Control Module
+Name[ast]=Módulu de control Grub2
 Name[bs]=Grub2 kontrolni modul
 Name[ca]=Mòdul de control de Grub2
 Name[ca@valencia]=Mòdul de control de Grub2
